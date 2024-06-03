@@ -10,16 +10,12 @@ const AppDrawerContent = (props) => {
       <>
          <DrawerContentScrollView {...props}>
             <View className="py-5">
-               <Text className="text-neutral-500 text-center text-2xl">BXXL</Text>
-               <Text className="text-white text-center text-sm">Playground</Text>
+               <Text className="text-neutral-300 text-center text-2xl font-extralight tracking-widest">PLAYGROUND</Text>
+               <Text className="text-neutral-500 text-center text-xs">by bomb.H</Text>
             </View>
 
             <DrawerItemList {...props} />
          </DrawerContentScrollView>
-
-         <View className="pb-3">
-            <Text className="text-neutral-500 text-center text-xs">Version 1.0.0</Text>
-         </View>
       </>
    )
 }
