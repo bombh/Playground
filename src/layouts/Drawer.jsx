@@ -1,7 +1,7 @@
 import { Drawer } from "expo-router/drawer"
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer"
 import { Text, View } from "react-native"
-import { DocumentTextIcon, DocumentDuplicateIcon } from "react-native-heroicons/outline"
+import { DocumentTextIcon, DocumentDuplicateIcon, BeakerIcon } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
 // Drawer content
@@ -9,9 +9,15 @@ const AppDrawerContent = (props) => {
    return (
       <>
          <DrawerContentScrollView {...props}>
-            <View className="py-5">
-               <Text className="text-neutral-300 text-center text-2xl font-extralight tracking-widest">PLAYGROUND</Text>
-               <Text className="text-neutral-500 text-center text-xs">by bomb.H</Text>
+            <View className="flex flex-row justify-center">
+               <BeakerIcon
+                  size={80}
+                  color={colors.lime[400]}
+               />
+            </View>
+            <View className="pb-5">
+               <Text className="text-neutral-100 text-center text-xl font-extralight tracking-widest">PLAYGROUND</Text>
+               <Text className="text-neutral-500 text-center text-xs -mt-1">by bomb.H</Text>
             </View>
 
             <DrawerItemList {...props} />
