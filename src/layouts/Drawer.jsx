@@ -38,13 +38,13 @@ const DrawerLayout = () => {
             headerShadowVisible: false,
             drawerStyle: {
                width: 220,
-               backgroundColor: colors.gray[900],
+               backgroundColor: colors.gray[950],
             },
             drawerLabelStyle: {
                marginLeft: -30,
             },
-            drawerActiveTintColor: colors.gray[200],
-            drawerActiveBackgroundColor: colors.gray[700],
+            drawerActiveTintColor: colors.gray[100],
+            drawerActiveBackgroundColor: colors.gray[800],
             drawerInactiveTintColor: colors.gray[400],
          }}
          initialRouteName="works"
