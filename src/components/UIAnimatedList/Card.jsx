@@ -1,5 +1,5 @@
 import { View, Text, Image } from "react-native"
-import Animated, { LinearTransition, RollInLeft, RollOutRight } from "react-native-reanimated"
+import Animated, { LinearTransition, RollInLeft, RollInRight, RollOutLeft, RollOutRight } from "react-native-reanimated"
 
 const Card = (movie) => {
    const { id, title, description, posterUrl } = movie
@@ -8,8 +8,8 @@ const Card = (movie) => {
       <Animated.View
          className="bg-white p-5 mb-5 rounded-lg shadow-md"
          layout={LinearTransition.stiffness()}
-         entering={RollInLeft}
-         exiting={RollOutRight}
+         entering={RollInRight}
+         exiting={RollOutLeft}
       >
          <Text className="text-xl font-extrabold mb-2">{title}</Text>
          <Text className="text-xs text-neutral-700">{description}</Text>

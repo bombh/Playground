@@ -15,6 +15,8 @@ const CardList = ({ data }) => {
       setMovies([...movies.slice(1)])
    }
 
+   // TODO: handleDeleteById(id)
+
    // Render
    return (
       <>
@@ -35,9 +37,10 @@ const CardList = ({ data }) => {
          </View>
 
          <ScrollView className="px-4 mt-2">
-            {movies.map((movie) => (
+            {movies.map((movie, index) => (
                <Card
                   key={movie.id}
+                  onPress={() => console.log(`Pressing ${index}`)}
                   {...movie}
                />
             ))}
