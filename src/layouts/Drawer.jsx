@@ -67,7 +67,7 @@ const DrawerLayout = () => {
          <Drawer.Screen
             name="UIDoubleList"
             options={{
-               drawerLabel: "UI Double List",
+               drawerLabel: "UI Multi List",
                title: "",
                drawerIcon: ({ color }) => (
                   <DocumentTextIcon
