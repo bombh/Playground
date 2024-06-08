@@ -20,9 +20,9 @@ const CardList = ({ data }) => {
    // Render
    return (
       <>
-         <ScrollView className="px-4 mt-2">
+         <ScrollView className="flex-1 px-4 mt-2 bg-stone-100">
             <Pressable
-               className="text-white bg-black my-5 px-5 py-2 rounded-md active:opacity-70"
+               className="bg-stone-900 my-5 px-5 py-2 rounded-md active:opacity-80"
                onPress={handleAdd}
             >
                <View className="flex-row space-x-2 items-center justify-center">
