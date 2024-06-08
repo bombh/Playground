@@ -16,8 +16,8 @@ const AppDrawerContent = (props) => {
                />
             </View>
             <View className="pb-5">
-               <Text className="text-lime-200 text-center text-xl font-extralight tracking-widest">PLAYGROUND</Text>
-               <Text className="text-gray-500 text-center text-xs -mt-1">by bomb.H</Text>
+               <Text className="text-lime-300 text-center text-xl font-extralight tracking-widest">PLAYGROUND</Text>
+               <Text className="text-stone-500 text-center text-xs -mt-1">by bomb.H</Text>
             </View>
 
             <DrawerItemList {...props} />
@@ -38,14 +38,14 @@ const DrawerLayout = () => {
             headerShadowVisible: false,
             drawerStyle: {
                width: 220,
-               backgroundColor: colors.gray[950],
+               backgroundColor: colors.stone[900],
             },
             drawerLabelStyle: {
                marginLeft: -30,
             },
-            drawerActiveTintColor: colors.gray[100],
-            drawerActiveBackgroundColor: colors.gray[800],
-            drawerInactiveTintColor: colors.gray[400],
+            drawerActiveTintColor: colors.stone[100],
+            drawerActiveBackgroundColor: colors.stone[800],
+            drawerInactiveTintColor: colors.stone[500],
          }}
          initialRouteName="works"
       >
