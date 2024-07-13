@@ -16,12 +16,13 @@ const AppDrawerContent = (props) => {
                />
             </View>
             <View className="pb-5">
-               <Text className="text-lime-300 text-center text-xl pt-3 font-rock">Playground</Text>
+               <Text className="text-lime-300 text-center text-xl pt-3 font-rock tracking-widest">Playground</Text>
                <Text className="text-stone-500 text-center text-xs -mt-2">by bomb.H</Text>
             </View>
 
             <DrawerItemList {...props} />
          </DrawerContentScrollView>
+         <Text className="absolute bottom-6 text-stone-500 text-xs w-full text-center ">Version 1.0.0</Text>
       </>
    )
 }
