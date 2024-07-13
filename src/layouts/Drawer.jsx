@@ -9,15 +9,15 @@ const AppDrawerContent = (props) => {
    return (
       <>
          <DrawerContentScrollView {...props}>
-            <View className="flex flex-row justify-center">
+            <View className="flex-row justify-center">
                <BeakerIcon
                   size={80}
                   color={colors.lime[400]}
                />
             </View>
             <View className="pb-5">
-               <Text className="text-lime-300 text-center text-xl font-extralight tracking-widest">PLAYGROUND</Text>
-               <Text className="text-stone-500 text-center text-xs -mt-1">by bomb.H</Text>
+               <Text className="text-lime-300 text-center text-xl pt-3 font-rock">Playground</Text>
+               <Text className="text-stone-500 text-center text-xs -mt-2">by bomb.H</Text>
             </View>
 
             <DrawerItemList {...props} />

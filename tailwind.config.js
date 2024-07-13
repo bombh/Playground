@@ -7,6 +7,9 @@ module.exports = {
             primary: "#333",
          },
       },
+      fontFamily: {
+         rock: ["RockSalt-Regular", "sans-serif"],
+      },
    },
    plugins: [],
 }
