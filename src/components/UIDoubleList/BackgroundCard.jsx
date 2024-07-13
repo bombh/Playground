@@ -6,7 +6,7 @@ const BackgroundCard = ({ poster }) => {
       <Image
          source={{ uri: poster }}
          className="w-full h-full"
-         blurRadius={40}
+         blurRadius={30}
       />
    )
 }

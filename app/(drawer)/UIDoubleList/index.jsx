@@ -1,68 +1,119 @@
 /**
  * @name UIDoubleList
  * @description Tutorial with synced scroll between two FlatLists
- * @tutorial https://www.youtube.com/watch?v=gOj4BlzYF4A
+ * @tutorial https://www.youtube.com/watch?v=gOj4BlzYF4A blurred background images
+ * @tutorial https://www.youtube.com/watch?v=gjC2oUJhePE thumbnail images
  */
 
-import { View, Text, FlatList, Animated, Dimensions, Image, StyleSheet } from "react-native"
-import React, { useRef } from "react"
+import { View, FlatList, Animated, Dimensions, Image, StyleSheet } from "react-native"
+import React, { useRef, useState } from "react"
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
 
-import Card from "@/src/components/UIDoubleList/Card"
+import MovieCard from "@/src/components/UIDoubleList/MovieCard"
 import BackgroundCard from "@/src/components/UIDoubleList/BackgroundCard"
 import ThumbnailCard from "@/src/components/UIDoubleList/ThumbnailCard"
 
+// Get local data
 const data = require("@/data/movies.json")
 
 const AnimatedList = () => {
+   const [activeIndex, setActiveIndex] = useState(0)
+
    const { width, height } = Dimensions.get("window")
-   const scrollX = useRef(new Animated.Value(0)).current
+
+   const _scrollX = useRef(new Animated.Value(0)).current
+   const _movieRef = useRef(null)
+   const _thumbnailRef = useRef(null)
+
+   const scrollToActiveIndex = (index) => {
+      setActiveIndex(index)
+
+      _movieRef?.current?.scrollToIndex({
+         index,
+         animated: true,
+      })
+
+      _thumbnailRef?.current?.scrollToIndex({
+         index,
+         animated: true,
+         viewPosition: 0.5,
+      })
+   }
 
    return (
       <>
          <ScreenDrawer title="UI Multi List" />
 
-         {/* Background blurred images */}
-         <View style={StyleSheet.absoluteFillObject}>
+         {/*** Background blurred images ***/}
+         <View
+            style={StyleSheet.absoluteFillObject}
+            className="bg-black"
+         >
             {data.movies.map((movie, index) => {
                // Set range for opacity
                const inputRange = [(index - 1) * width, index * width, (index + 1) * width]
-               const opacity = scrollX.interpolate({
+               const opacity = _scrollX.interpolate({
                   inputRange,
-                  outputRange: [0, 1, 0],
+                  outputRange: [0, 0.5, 0],
                })
 
                return (
-                  <Animated.View style={[StyleSheet.absoluteFillObject, { opacity }]}>
+                  <Animated.View
+                     key={`bg-${movie.imdbID}`}
+                     style={[StyleSheet.absoluteFillObject, { opacity }]}
+                  >
                      <BackgroundCard {...movie} />
                   </Animated.View>
                )
             })}
          </View>
 
-         {/* Main cards */}
+         {/*** Movie cards ***/}
          <Animated.FlatList
             data={data.movies}
+            ref={_movieRef}
             keyExtractor={(item) => item.imdbID.toString()}
+            getItemLayout={(data, index) => ({ length: width, offset: width * index, index })}
             horizontal
             pagingEnabled
-            renderItem={({ item }) => <Card {...item} />}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item }) => <MovieCard {...item} />}
             onScroll={Animated.event(
                [
                   {
                      nativeEvent: {
                         contentOffset: {
-                           x: scrollX,
+                           x: _scrollX,
                         },
                      },
                   },
                ],
                { useNativeDriver: true }
             )}
+            onMomentumScrollEnd={(event) => {
+               scrollToActiveIndex(Math.floor(event.nativeEvent.contentOffset.x / width))
+               //_thumbnailRef.current.scrollToIndex({ activeIndex })
+            }}
          />
 
-         {/* Thumbnails */}
-         <View className=""></View>
+         {/*** Thumbnails ***/}
+         <View className="absolute bottom-10 left-0 right-0 mx-5">
+            <FlatList
+               data={data.movies}
+               ref={_thumbnailRef}
+               keyExtractor={(item) => item.imdbID.toString()}
+               horizontal
+               showsHorizontalScrollIndicator={false}
+               renderItem={({ item, index }) => (
+                  <ThumbnailCard
+                     {...item}
+                     index={index}
+                     activeIndex={activeIndex}
+                     scrollToActiveIndex={scrollToActiveIndex}
+                  />
+               )}
+            />
+         </View>
       </>
    )
 }
