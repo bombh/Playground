@@ -81,6 +81,21 @@ const DrawerLayout = () => {
          />
 
          <Drawer.Screen
+            name="UIMaskedList"
+            options={{
+               drawerLabel: "UI Masked List",
+               title: "",
+               drawerIcon: ({ color }) => (
+                  <DocumentTextIcon
+                     size={16}
+                     color={color}
+                     style={{ marginRight: 5 }}
+                  />
+               ),
+            }}
+         />
+
+         <Drawer.Screen
             name="template"
             options={{
                drawerLabel: "Template",
