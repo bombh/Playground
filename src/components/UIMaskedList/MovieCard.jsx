@@ -1,11 +1,19 @@
 import { View, Text, Image, Dimensions, Animated } from "react-native"
 import React from "react"
+import MaskedView from "@react-native-masked-view/masked-view"
+import Svg, { Rect } from "react-native-svg"
+import { LinearGradient } from "expo-linear-gradient"
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
+const GAP_SIZE = 0
+const OUTER_SIZE = (width - ITEM_SIZE) / 2
 
 const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) => {
-   const inputRange = [(index - 1) * ITEM_SIZE, index * ITEM_SIZE, (index + 1) * ITEM_SIZE]
+   // If dummy outer items, return a view
+   if (!title) return <View style={{ width: OUTER_SIZE, height: ITEM_SIZE }} />
+
+   const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE, index * ITEM_SIZE]
    const translateY = _scrollX.interpolate({
       inputRange,
       outputRange: [0, -50, 0],
@@ -13,11 +21,11 @@ const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) 
 
    return (
       <Animated.View
-         className="bg-blue-100 rounded-2xl"
-         style={{ width: ITEM_SIZE, transform: [{ translateY }] }}
+         className="px-2"
+         style={{ width: ITEM_SIZE, marginTop: height / 6, transform: [{ translateY }] }}
       >
          <View
-            className="items-center p-5"
+            className="bg-white rounded-2xl items-center py-5"
             // style={{ width: ITEM_SIZE }}
          >
             <Image
@@ -27,13 +35,13 @@ const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) 
                className="my-2 rounded-2xl"
             />
             <Text
-               style={{ maxWidth: ITEM_SIZE }}
+               style={{ maxWidth: ITEM_SIZE * 0.8 }}
                numberOfLines={1}
                className="text-stone-800 text-lg font-semibold text-center px-2"
             >
                {title}
             </Text>
-            <Text className="text-stone-800 text-base text-center">
+            <Text className="text-stone-800 text-sm text-center">
                {director} ({year})
             </Text>
             <Text
