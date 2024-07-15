@@ -4,14 +4,14 @@
  * @tutorial https://www.youtube.com/watch?v=fSuYM86JXFo
  */
 
-import { View, Text, FlatList, Dimensions, Image, Animated, SafeAreaView } from "react-native"
+import { View, Text, FlatList, Dimensions, Image, Animated, SafeAreaView, Platform } from "react-native"
 import React, { useRef } from "react"
 
 import ScreenStackFull from "@/src/layouts/ScreenStackFull"
 
 const { width, height } = Dimensions.get("window")
-const ITEM_WIDTH = width * 0.75
-const ITEM_HEIGHT = ITEM_WIDTH * 1.5
+const ITEM_WIDTH = width * 0.7
+const ITEM_HEIGHT = ITEM_WIDTH * 1.4
 
 const AnimatedList = () => {
    const _scrollX = useRef(new Animated.Value(0)).current
@@ -20,7 +20,12 @@ const AnimatedList = () => {
       <>
          <ScreenStackFull />
          <SafeAreaView>
-            <Text className="text-3xl text-stone-700 font-rock mt-8 mb-4 pt-5 text-center">Parallax</Text>
+            <Text
+               style={{ marginTop: Platform.OS === "ios" ? 35 : 70 }}
+               className="text-3xl text-stone-700 font-rock mb-4 pt-5 text-center"
+            >
+               Parallax
+            </Text>
 
             <Animated.FlatList
                data={data}
