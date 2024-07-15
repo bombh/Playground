@@ -17,8 +17,8 @@ const AnimatedList = () => {
                className="mx-5 mb-4 p-3 bg-white border border-stone-300 rounded-lg active:opacity-70 active:border-stone-400 "
                onPress={() => navigation.navigate("carousel1")}
             >
-               <Text className="text-lg font-semibold mb-2 active:mb-5">Carousel 01</Text>
-               <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean rutrum vehicula bibendum.</Text>
+               <Text className="text-lg font-semibold mb-2">Carousel 01</Text>
+               <Text>Animated • FlatList</Text>
             </Pressable>
 
             <Pressable
@@ -26,7 +26,15 @@ const AnimatedList = () => {
                onPress={() => navigation.navigate("carousel2")}
             >
                <Text className="text-lg font-semibold mb-2">Carousel 02</Text>
-               <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean rutrum vehicula bibendum.</Text>
+               <Text>Animated • 2 FlatLists synced</Text>
+            </Pressable>
+
+            <Pressable
+               className="mx-5 mb-4 p-3 bg-white border border-stone-300 rounded-lg active:opacity-70 active:border-stone-400 "
+               onPress={() => navigation.navigate("carousel3")}
+            >
+               <Text className="text-lg font-semibold mb-2">Carousel 03</Text>
+               <Text>Parallax effect</Text>
             </Pressable>
          </ScrollView>
       </>
