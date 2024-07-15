@@ -18,7 +18,7 @@ const data = [{ imdbID: "left-spacer" }, ...jsonData.movies, { imdbID: "right-sp
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
-const BACKGROUND_HEIGHT = height * 0.55
+const BACKGROUND_HEIGHT = height * 0.6
 
 const AnimatedList = () => {
    const _scrollX = useRef(new Animated.Value(0)).current

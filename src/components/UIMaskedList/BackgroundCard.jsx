@@ -10,9 +10,10 @@ const BackgroundCard = ({ poster, width, height }) => {
          style={{
             width: width,
             height: height,
+            opacity: 0.8,
          }}
          resizeMode="cover"
-         blurRadius={2}
+         blurRadius={10}
       />
    )
 }
