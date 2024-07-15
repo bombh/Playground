@@ -3,7 +3,7 @@ import React from "react"
 import { Redirect } from "expo-router"
 
 const Home = () => {
-   return <Redirect href="UIAnimatedList" />
+   return <Redirect href="(drawer)" />
 }
 
 export default Home
