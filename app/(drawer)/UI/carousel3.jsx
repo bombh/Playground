@@ -1,3 +1,9 @@
+/**
+ * @name UI Carousel 3
+ * @description Tutorial with parallax effect
+ * @tutorial https://www.youtube.com/watch?v=fSuYM86JXFo
+ */
+
 import { View, Text, FlatList, Dimensions, Image, Animated, SafeAreaView } from "react-native"
 import React, { useRef } from "react"
 
