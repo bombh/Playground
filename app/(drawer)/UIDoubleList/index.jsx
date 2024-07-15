@@ -25,13 +25,15 @@ const AnimatedList = () => {
    const _movieRef = useRef(null)
    const _thumbnailRef = useRef(null)
 
-   const scrollToActiveIndex = (index) => {
+   const scrollToActiveIndex = (index, movieRefUpdate) => {
       setActiveIndex(index)
 
-      _movieRef?.current?.scrollToIndex({
-         index,
-         animated: true,
-      })
+      if (movieRefUpdate) {
+         _movieRef?.current?.scrollToIndex({
+            index,
+            animated: true,
+         })
+      }
 
       _thumbnailRef?.current?.scrollToIndex({
          index,
@@ -42,7 +44,7 @@ const AnimatedList = () => {
 
    return (
       <>
-         <ScreenDrawer title="UI Multi List" />
+         <ScreenDrawer title="UI Double List" />
 
          {/*** Background blurred images ***/}
          <View
@@ -91,8 +93,7 @@ const AnimatedList = () => {
                { useNativeDriver: true }
             )}
             onMomentumScrollEnd={(event) => {
-               scrollToActiveIndex(Math.floor(event.nativeEvent.contentOffset.x / width))
-               //_thumbnailRef.current.scrollToIndex({ activeIndex })
+               scrollToActiveIndex(Math.round(event.nativeEvent.contentOffset.x / width), false)
             }}
          />
 

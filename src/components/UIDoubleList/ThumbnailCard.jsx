@@ -3,8 +3,6 @@ import React from "react"
 import colors from "tailwindcss/colors"
 
 const ThumbnailCard = ({ thumbnail, index, activeIndex, scrollToActiveIndex }) => {
-   // aa
-
    // Render
    return (
       <Pressable
@@ -13,7 +11,7 @@ const ThumbnailCard = ({ thumbnail, index, activeIndex, scrollToActiveIndex }) =
             borderWidth: 1,
             borderColor: activeIndex === index ? "white" : "transparent",
          }}
-         onPress={() => scrollToActiveIndex(index)}
+         onPress={() => scrollToActiveIndex(index, true)}
       >
          <Image
             source={{ uri: thumbnail }}
