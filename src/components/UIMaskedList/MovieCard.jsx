@@ -1,8 +1,5 @@
 import { View, Text, Image, Dimensions, Animated } from "react-native"
 import React from "react"
-import MaskedView from "@react-native-masked-view/masked-view"
-import Svg, { Rect } from "react-native-svg"
-import { LinearGradient } from "expo-linear-gradient"
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
@@ -16,16 +13,16 @@ const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) 
    const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE, index * ITEM_SIZE]
    const translateY = _scrollX.interpolate({
       inputRange,
-      outputRange: [0, -50, 0],
+      outputRange: [175, 115, 175],
    })
 
    return (
       <Animated.View
-         className="px-2"
-         style={{ width: ITEM_SIZE, marginTop: height / 6, transform: [{ translateY }] }}
+         className="px-3"
+         style={{ width: ITEM_SIZE, transform: [{ translateY }] }}
       >
          <View
-            className="bg-white rounded-2xl items-center py-5"
+            className="bg-white rounded-2xl items-center pt-2 pb-5"
             // style={{ width: ITEM_SIZE }}
          >
             <Image
