@@ -1,11 +1,15 @@
 import { View, Text, Image, Dimensions, Animated } from "react-native"
 import React from "react"
+import Rating from "../movie/Rating"
+import { styled } from "nativewind"
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
 const OUTER_SIZE = (width - ITEM_SIZE) / 2
 
-const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) => {
+const SRating = styled(Rating)
+
+const MovieCard = ({ index, title, thumbnail, director, year, imdbRating, plot, _scrollX }) => {
    // If dummy outer items, return a view
    if (!title) return <View style={{ width: OUTER_SIZE, height: ITEM_SIZE }} />
 
@@ -33,16 +37,17 @@ const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) 
             <Text
                style={{ maxWidth: ITEM_SIZE * 0.8 }}
                numberOfLines={1}
-               className="text-stone-800 text-lg font-semibold text-center px-2"
+               className="text-stone-800 text-lg font-bold text-center px-2"
             >
                {title}
             </Text>
-            <Text className="text-stone-800 text-sm text-center">
+            <Text className="text-stone-500 text-sm text-center px-2 pb-1">
                {director} ({year})
             </Text>
+            <Rating rating={imdbRating} />
             <Text
                style={{ maxWidth: ITEM_SIZE * 0.8 }}
-               className="text-stone-800 text-xs text-justify mt-2"
+               className="text-stone-800 text-xs text-justify px-2 mt-2"
                numberOfLines={5}
             >
                {plot}
