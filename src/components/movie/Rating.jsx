@@ -4,10 +4,12 @@ import { StarIcon as StarOff } from "react-native-heroicons/outline"
 import { StarIcon as StarOn } from "react-native-heroicons/solid"
 import colors from "tailwindcss/colors"
 
+const RATING_MAX = 10
 const STARS_MAX = 5
+const DIVIDER = RATING_MAX / STARS_MAX // Should be an entire number
 
 const Rating = ({ rating }) => {
-   const filledStars = Math.round(rating / 2)
+   const filledStars = Math.round(rating / DIVIDER)
    const emptyStars = STARS_MAX - filledStars
    const stars = [...Array(filledStars).fill("on"), ...Array(emptyStars).fill("off")]
 
