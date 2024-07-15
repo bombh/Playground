@@ -3,7 +3,6 @@ import React from "react"
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
-const GAP_SIZE = 0
 const OUTER_SIZE = (width - ITEM_SIZE) / 2
 
 const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) => {
@@ -13,16 +12,16 @@ const MovieCard = ({ index, title, thumbnail, director, year, plot, _scrollX }) 
    const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE, index * ITEM_SIZE]
    const translateY = _scrollX.interpolate({
       inputRange,
-      outputRange: [175, 115, 175],
+      outputRange: [height / 4, height / 6, height / 4],
    })
 
    return (
       <Animated.View
-         className="px-3"
+         className="px-4"
          style={{ width: ITEM_SIZE, transform: [{ translateY }] }}
       >
          <View
-            className="bg-white rounded-2xl items-center pt-2 pb-5"
+            className="bg-white rounded-2xl items-center pt-1 pb-5"
             // style={{ width: ITEM_SIZE }}
          >
             <Image

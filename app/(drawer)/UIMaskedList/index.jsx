@@ -6,8 +6,6 @@
 
 import { View, Text, Dimensions, FlatList, Animated, Platform, Image, StyleSheet } from "react-native"
 import React, { useRef } from "react"
-import MaskedView from "@react-native-masked-view/masked-view"
-import Svg, { Rect } from "react-native-svg"
 import { LinearGradient } from "expo-linear-gradient"
 
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
@@ -20,24 +18,7 @@ const data = [{ imdbID: "left-spacer" }, ...jsonData.movies, { imdbID: "right-sp
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
-const BACKGROUND_HEIGHT = height * 0.6
-const GAP_SIZE = 0
-
-const Backdrop = ({ movies, scrollX }) => {
-   return (
-      <View style={{ height: BACKGROUND_HEIGHT, width, position: "absolute", backgroundColor: "black" }}>
-         <LinearGradient
-            colors={["rgba(255, 255, 255, 0)", "white"]}
-            style={{
-               height: BACKGROUND_HEIGHT,
-               width,
-               position: "absolute",
-               bottom: 0,
-            }}
-         />
-      </View>
-   )
-}
+const BACKGROUND_HEIGHT = height * 0.55
 
 const AnimatedList = () => {
    const _scrollX = useRef(new Animated.Value(0)).current
@@ -45,11 +26,6 @@ const AnimatedList = () => {
    return (
       <View className="bg-white flex-1">
          <ScreenDrawer title="UI Masked List" />
-
-         <Backdrop
-            movies={data}
-            scrollX={_scrollX}
-         />
 
          {/*** Background blurred images ***/}
          <View style={StyleSheet.absoluteFillObject}>
@@ -87,13 +63,6 @@ const AnimatedList = () => {
          />
          <Animated.FlatList
             data={data}
-            contentContainerStyle={
-               {
-                  //marginVertical: 150,
-                  //paddingVertical: ITEM_SIZE / 2,
-                  //paddingHorizontal: 0,
-               }
-            }
             keyExtractor={(item) => item.imdbID.toString()}
             getItemLayout={(data, index) => ({
                length: ITEM_SIZE,
