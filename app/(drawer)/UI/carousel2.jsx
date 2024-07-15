@@ -1,5 +1,5 @@
 /**
- * @name UIDoubleList
+ * @name UICarousel02
  * @description Tutorial with synced scroll between two FlatLists
  * @tutorial https://www.youtube.com/watch?v=gOj4BlzYF4A blurred background images
  * @tutorial https://www.youtube.com/watch?v=gjC2oUJhePE thumbnail images
@@ -7,11 +7,11 @@
 
 import { View, FlatList, Animated, Dimensions, Image, StyleSheet } from "react-native"
 import React, { useRef, useState } from "react"
-import ScreenDrawer from "@/src/layouts/ScreenDrawer"
+import ScreenStackFull from "@/src/layouts/ScreenStackFull"
 
-import MovieCard from "@/src/components/UIDoubleList/MovieCard"
-import BackgroundCard from "@/src/components/UIDoubleList/BackgroundCard"
-import ThumbnailCard from "@/src/components/UIDoubleList/ThumbnailCard"
+import MovieCard from "@/src/components/UICarousel02/MovieCard"
+import BackgroundCard from "@/src/components/UICarousel02/BackgroundCard"
+import ThumbnailCard from "@/src/components/UICarousel02/ThumbnailCard"
 
 // Get local data
 const data = require("@/data/movies.json")
@@ -44,7 +44,7 @@ const AnimatedList = () => {
 
    return (
       <>
-         <ScreenDrawer title="UI Double List" />
+         <ScreenStackFull title="UI Double List" />
 
          {/*** Background blurred images ***/}
          <View

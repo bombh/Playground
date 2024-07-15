@@ -1,23 +1,21 @@
 import { View, Text, Image, Dimensions, Animated } from "react-native"
 import React from "react"
 import Rating from "../movie/Rating"
-import { styled } from "nativewind"
 import Genres from "../movie/Genres"
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
 const OUTER_SIZE = (width - ITEM_SIZE) / 2
 
-const SRating = styled(Rating)
-
 const MovieCard = ({ index, title, thumbnail, director, year, imdbRating, genre, plot, _scrollX }) => {
    // If dummy outer items, return a view
    if (!title) return <View style={{ width: OUTER_SIZE, height: ITEM_SIZE }} />
 
+   // Set range for translateY
    const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE, index * ITEM_SIZE]
    const translateY = _scrollX.interpolate({
       inputRange,
-      outputRange: [height / 4.5, height / 7, height / 4.5],
+      outputRange: [height / 3, height / 6, height / 3],
    })
 
    return (

@@ -1,4 +1,4 @@
-import { View, Text, Image, Dimensions } from "react-native"
+import { View, Text, Image, Dimensions, Platform } from "react-native"
 import React from "react"
 
 const { width, height } = Dimensions.get("window")
@@ -6,8 +6,8 @@ const { width, height } = Dimensions.get("window")
 const MovieCard = ({ title, thumbnail, director, year }) => {
    return (
       <View
-         style={{ width }}
-         className="mt-10 items-center"
+         style={{ width, marginTop: Platform.OS === "ios" ? height / 6 : height / 9 }}
+         className="items-center"
       >
          <View
             style={{ maxWidth: 288 }}

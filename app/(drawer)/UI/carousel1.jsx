@@ -1,6 +1,6 @@
 /**
- * @name UIMaskedList
- * @description Tutorial with synced scroll between two FlatLists
+ * @name UI Carousel 1
+ * @description Tutorial with animated scroll
  * @tutorial https://www.youtube.com/watch?v=yV-2HRzNX9o
  */
 
@@ -8,9 +8,9 @@ import { View, Text, Dimensions, FlatList, Animated, Platform, Image, StyleSheet
 import React, { useRef } from "react"
 import { LinearGradient } from "expo-linear-gradient"
 
-import ScreenDrawer from "@/src/layouts/ScreenDrawer"
-import MovieCard from "@/src/components/UIMaskedList/MovieCard"
-import BackgroundCard from "@/src/components/UIMaskedList/BackgroundCard"
+import ScreenStackFull from "@/src/layouts/ScreenStackFull"
+import MovieCard from "@/src/components/UICarousel01/MovieCard"
+import BackgroundCard from "@/src/components/UICarousel01/BackgroundCard"
 
 // Get local data
 const jsonData = require("@/data/movies.json")
@@ -18,14 +18,14 @@ const data = [{ imdbID: "left-spacer" }, ...jsonData.movies, { imdbID: "right-sp
 
 const { width, height } = Dimensions.get("window")
 const ITEM_SIZE = width * 0.7
-const BACKGROUND_HEIGHT = height * 0.5
+const BACKGROUND_HEIGHT = height * 0.6
 
 const AnimatedList = () => {
    const _scrollX = useRef(new Animated.Value(0)).current
 
    return (
       <View className="bg-white flex-1">
-         <ScreenDrawer title="UI Masked List" />
+         <ScreenStackFull title="UI Masked List" />
 
          {/*** Background blurred images ***/}
          <View style={StyleSheet.absoluteFillObject}>

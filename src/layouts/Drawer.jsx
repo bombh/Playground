@@ -1,13 +1,7 @@
 import { Drawer } from "expo-router/drawer"
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer"
 import { Text, View } from "react-native"
-import {
-   DocumentTextIcon,
-   DocumentDuplicateIcon,
-   BeakerIcon,
-   HomeIcon,
-   CursorArrowRippleIcon,
-} from "react-native-heroicons/outline"
+import { DocumentDuplicateIcon, BeakerIcon, CursorArrowRippleIcon } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
 // Drawer content
@@ -72,42 +66,12 @@ const DrawerLayout = () => {
          />
 
          <Drawer.Screen
-            name="UIAnimatedList"
+            name="UI"
             options={{
-               drawerLabel: "UI Anim List",
+               drawerLabel: "UI Animated",
                title: "",
                drawerIcon: ({ color }) => (
                   <CursorArrowRippleIcon
-                     size={16}
-                     color={color}
-                     style={{ marginRight: 5 }}
-                  />
-               ),
-            }}
-         />
-
-         <Drawer.Screen
-            name="UIDoubleList"
-            options={{
-               drawerLabel: "UI Multi List",
-               title: "",
-               drawerIcon: ({ color }) => (
-                  <DocumentTextIcon
-                     size={16}
-                     color={color}
-                     style={{ marginRight: 5 }}
-                  />
-               ),
-            }}
-         />
-
-         <Drawer.Screen
-            name="UIMaskedList"
-            options={{
-               drawerLabel: "UI Masked List",
-               title: "",
-               drawerIcon: ({ color }) => (
-                  <DocumentTextIcon
                      size={16}
                      color={color}
                      style={{ marginRight: 5 }}
