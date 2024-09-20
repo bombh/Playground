@@ -16,7 +16,7 @@ const AppDrawerContent = (props) => {
                />
             </View>
             <View className="pb-5">
-               <Text className="text-lime-300 text-center text-xl pt-3 font-rock tracking-widest">Playground</Text>
+               <Text className="text-lime-300 text-center text-xl pt-3 font-rock tracking-widest">PlayGround</Text>
                <Text className="text-stone-500 text-center text-xs -mt-2">by bomb.H</Text>
             </View>
 

@@ -31,6 +31,12 @@ const AnimatedList = () => {
                description="Parallax effect"
                link="carousel3"
             />
+
+            {/* <ListItem
+               title="Ringing animation"
+               description="Moti"
+               link="ringing"
+            /> */}
          </ScrollView>
       </>
    )
