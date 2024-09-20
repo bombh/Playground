@@ -32,7 +32,7 @@ const Home = () => {
                      <MotiView
                         key={index}
                         from={{
-                           opacity: 0.7,
+                           opacity: 0.75,
                            scale: 1,
                         }}
                         animate={{
@@ -42,7 +42,7 @@ const Home = () => {
                         transition={{
                            type: "timing",
                            duration: 3000,
-                           delay: index * 250,
+                           delay: index * 200,
                            easing: Easing.out(Easing.ease),
                            loop: true,
                            repeatReverse: false,
