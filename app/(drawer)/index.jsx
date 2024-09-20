@@ -1,3 +1,9 @@
+/**
+ * @name Ringing effect
+ * @description using Moti
+ * @tutorial https://www.youtube.com/watch?v=hTmkjdKO3_M
+ */
+
 import { View, Text, StyleSheet } from "react-native"
 import { useState } from "react"
 import { Easing } from "react-native-reanimated"
@@ -12,8 +18,8 @@ import ScreenStackFull from "@/src/layouts/ScreenStackFull"
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
 
 const Home = () => {
-   const [numCircles, setNumCircles] = useState(3)
-   const [numCirclesDisplay, setNumCirclesDisplay] = useState(3)
+   const [numCircles, setNumCircles] = useState(5)
+   const [numCirclesDisplay, setNumCirclesDisplay] = useState(5)
 
    return (
       <>
@@ -26,23 +32,23 @@ const Home = () => {
                      <MotiView
                         key={index}
                         from={{
-                           opacity: 0.5,
+                           opacity: 0.7,
                            scale: 1,
                         }}
                         animate={{
                            opacity: 0,
-                           scale: 5,
+                           scale: 4,
                         }}
                         transition={{
                            type: "timing",
                            duration: 3000,
-                           delay: index * 400,
+                           delay: index * 250,
                            easing: Easing.out(Easing.ease),
                            loop: true,
                            repeatReverse: false,
                         }}
                         style={StyleSheet.absoluteFill}
-                        className="bg-lime-400 rounded-full border border-white"
+                        className="bg-lime-400 rounded-full border-0 border-white items-center justify-center"
                      />
                   )
                })}
@@ -62,10 +68,10 @@ const Home = () => {
                <Text className="text-lg text-stone-500 font-rock pt-4">{numCirclesDisplay.toString()} waves</Text>
                <Slider
                   style={{ width: 220, height: 40 }}
-                  minimumValue={1}
-                  maximumValue={6}
+                  minimumValue={0}
+                  maximumValue={10}
                   step={1}
-                  value={3}
+                  value={5}
                   onSlidingStart={() => {
                      setNumCircles(0)
                   }}
