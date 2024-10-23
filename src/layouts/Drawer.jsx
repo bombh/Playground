@@ -1,7 +1,12 @@
 import { Drawer } from "expo-router/drawer"
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer"
 import { Text, View } from "react-native"
-import { DocumentDuplicateIcon, BeakerIcon, CursorArrowRippleIcon } from "react-native-heroicons/outline"
+import {
+   DocumentDuplicateIcon,
+   BeakerIcon,
+   CursorArrowRippleIcon,
+   Squares2X2Icon,
+} from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
 // Drawer content
@@ -72,6 +77,21 @@ const DrawerLayout = () => {
                title: "",
                drawerIcon: ({ color }) => (
                   <CursorArrowRippleIcon
+                     size={16}
+                     color={color}
+                     style={{ marginRight: 5 }}
+                  />
+               ),
+            }}
+         />
+
+         <Drawer.Screen
+            name="wordle"
+            options={{
+               drawerLabel: "Wordle",
+               title: "",
+               drawerIcon: ({ color }) => (
+                  <Squares2X2Icon
                      size={16}
                      color={color}
                      style={{ marginRight: 5 }}

@@ -32,11 +32,12 @@ const AnimatedList = () => {
                link="carousel3"
             />
 
-            {/* <ListItem
-               title="Ringing animation"
-               description="Moti"
-               link="ringing"
-            /> */}
+            <ListItem
+               title="Image Gallery"
+               description="react-native-awesome-gallery
+"
+               link="gallery"
+            />
          </ScrollView>
       </>
    )

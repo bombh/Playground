@@ -60,12 +60,14 @@ const Home = () => {
             </View>
 
             <View className="pb-5">
-               <Text className="text-stone text-center text-2xl pt-5 font-rock tracking-widest">PlayGround</Text>
-               <Text className="text-stone-500 text-center text-base -mt-3">by bomb.H</Text>
+               <Text className="text-white text-center text-2xl pt-5 font-rock tracking-widest shadow-sm">
+                  PlayGround
+               </Text>
+               <Text className="text-white text-center text-base -mt-3 shadow-sm">by bomb.H</Text>
             </View>
 
             <View className="mt-12 w-full absolute items-center bottom-12">
-               <Text className="text-lg text-stone-500 font-rock pt-4">{numCirclesDisplay.toString()} waves</Text>
+               <Text className="text-lg text-stone-500 font-rock pt-4">{numCirclesDisplay.toString()} circles</Text>
                <Slider
                   style={{ width: 220, height: 40 }}
                   minimumValue={0}
