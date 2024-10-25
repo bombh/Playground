@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -25,8 +26,10 @@ const RootLayout = () => {
 
    return (
       <GestureHandlerRootView className="flex-1">
+         {/* <BottomSheetModalProvider> */}
          <StatusBar hidden={true} />
          <Slot />
+         {/* </BottomSheetModalProvider> */}
       </GestureHandlerRootView>
    )
 }

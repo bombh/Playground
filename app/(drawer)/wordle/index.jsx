@@ -3,13 +3,20 @@
  */
 
 import { View, Text, Pressable } from "react-native"
-import React from "react"
+import React, { useRef } from "react"
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
 import Icon from "@/assets/images/wordle/icon.svg"
 import { Link } from "expo-router"
 import { format } from "date-fns"
+import SubscribeModal from "@/src/components/wordle/SubscribeModal"
 
 const Wordle = () => {
+   const _subscribeModalRef = useRef(null)
+
+   const openSubscribeModal = () => {
+      _subscribeModalRef.current?.expand()
+   }
+
    return (
       <>
          <ScreenDrawer title="" />
@@ -45,20 +52,19 @@ const Wordle = () => {
                   </Pressable>
                </Link>
 
-               <Link
-                  href="/wordle/game"
-                  asChild
+               <Pressable
+                  className="border  border-stone-800 p-3 rounded-full active:opacity-50"
+                  onPress={openSubscribeModal}
                >
-                  <Pressable className="border  border-stone-800 p-3 rounded-full active:opacity-50">
-                     <Text className="text-base text-stone-800 text-center">Subscribe</Text>
-                  </Pressable>
-               </Link>
+                  <Text className="text-base text-stone-800 text-center">Subscribe</Text>
+               </Pressable>
             </View>
 
             <View className="items-center absolute bottom-8">
                <Text className="text-xs text-stone-500 font-bold">{format(new Date(), "EEEE d MMM yyyy")}</Text>
                <Text className="text-xs text-stone-500">by bomb.H</Text>
             </View>
+            <SubscribeModal ref={_subscribeModalRef} />
          </View>
       </>
    )
