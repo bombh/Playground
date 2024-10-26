@@ -25,8 +25,8 @@ const SubscribeModal = forwardRef(({}, ref) => {
    const showToast = () => {
       Toast.show({
          type: "info",
-         text1: "Hey good news",
-         text2: "Don't worry ! It's free for ever ✌️",
+         text1: "Hey good news !",
+         text2: "It will be free forever ✌️",
       })
       dismiss()
    }
