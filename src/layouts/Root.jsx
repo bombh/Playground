@@ -4,8 +4,15 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import Toast, { BaseToast } from "react-native-toast-message"
+import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
 
 SplashScreen.preventAutoHideAsync()
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+if (!publishableKey) {
+   throw new Error("Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env")
+}
 
 const toastConfig = {
    /*
@@ -15,7 +22,7 @@ const toastConfig = {
    info: (props) => (
       <BaseToast
          {...props}
-         style={{ borderLeftColor: "#000" }}
+         style={{ borderLeftColor: "#999" }}
          contentContainerStyle={{ paddingHorizontal: 15, backgroundColor: "#333" }}
          text1Style={{
             fontSize: 17,
@@ -47,13 +54,17 @@ const RootLayout = () => {
    if (!fontsLoaded && !error) return null
 
    return (
-      <GestureHandlerRootView className="flex-1">
-         {/* <BottomSheetModalProvider> */}
-         <StatusBar hidden={true} />
-         <Slot />
-         {/* </BottomSheetModalProvider> */}
-         <Toast config={toastConfig} />
-      </GestureHandlerRootView>
+      <ClerkProvider publishableKey={publishableKey}>
+         {/* <ClerkLoaded> */}
+         <GestureHandlerRootView className="flex-1">
+            {/* <BottomSheetModalProvider> */}
+            <StatusBar hidden={true} />
+            <Slot />
+            {/* </BottomSheetModalProvider> */}
+            <Toast config={toastConfig} />
+         </GestureHandlerRootView>
+         {/* </ClerkLoaded> */}
+      </ClerkProvider>
    )
 }
 
