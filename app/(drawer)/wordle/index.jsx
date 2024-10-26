@@ -14,7 +14,7 @@ const Wordle = () => {
    const _subscribeModalRef = useRef(null)
 
    const openSubscribeModal = () => {
-      _subscribeModalRef.current?.expand()
+      _subscribeModalRef.current?.snapToIndex(0)
    }
 
    return (

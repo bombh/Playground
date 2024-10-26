@@ -3,9 +3,31 @@ import { StatusBar } from "expo-status-bar"
 import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
-import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
+import Toast, { BaseToast } from "react-native-toast-message"
 
 SplashScreen.preventAutoHideAsync()
+
+const toastConfig = {
+   /*
+    Overwrite 'success' type,
+    by modifying the existing `BaseToast` component
+  */
+   info: (props) => (
+      <BaseToast
+         {...props}
+         style={{ borderLeftColor: "#000" }}
+         contentContainerStyle={{ paddingHorizontal: 15, backgroundColor: "#333" }}
+         text1Style={{
+            fontSize: 17,
+            fontWeight: "400",
+            color: "#fff",
+         }}
+         text2Style={{
+            fontSize: 14,
+         }}
+      />
+   ),
+}
 
 const RootLayout = () => {
    const [fontsLoaded, error] = useFonts({
@@ -30,6 +52,7 @@ const RootLayout = () => {
          <StatusBar hidden={true} />
          <Slot />
          {/* </BottomSheetModalProvider> */}
+         <Toast config={toastConfig} />
       </GestureHandlerRootView>
    )
 }

@@ -86,7 +86,7 @@ const Home = () => {
                   minimumTrackTintColor={colors.stone[400]}
                   maximumTrackTintColor={colors.lime[400]}
                />
-               <Text className="text-xs text-stone-500 mt-0">How many waves would you like ?</Text>
+               <Text className="text-xs text-stone-500 mt-0">How many circles would you like ?</Text>
             </View>
          </View>
       </>
