@@ -1,16 +1,21 @@
 /**
+ * @name Wordle
+ * @description The main screen of the Wordle game
  * @tutorial https://www.youtube.com/watch?v=pTonpjmKtiE
  */
 
 import { View, Text, Pressable } from "react-native"
 import React, { useRef } from "react"
-import ScreenDrawer from "@/src/layouts/ScreenDrawer"
-import Icon from "@/assets/images/wordle/icon.svg"
 import { Link } from "expo-router"
 import { format } from "date-fns"
+import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo"
+
+import ScreenDrawer from "@/src/layouts/ScreenDrawer"
+import Icon from "@/assets/images/wordle/icon.svg"
 import SubscribeModal from "@/src/components/wordle/SubscribeModal"
 
 const Wordle = () => {
+   const { signOut } = useAuth()
    const _subscribeModalRef = useRef(null)
 
    const openSubscribeModal = () => {
@@ -33,27 +38,38 @@ const Wordle = () => {
                </Text>
             </View>
 
-            <View className="w-full px-16 gap-y-5">
+            <View className="w-full px-16">
                <Link
                   href="/wordle/game"
                   asChild
                >
-                  <Pressable className="bg-stone-800 p-3 rounded-full active:opacity-70">
+                  <Pressable className="bg-stone-800 p-3 mt-4 rounded-full active:opacity-70">
                      <Text className="text-base text-white text-center">Play</Text>
                   </Pressable>
                </Link>
 
-               <Link
-                  href="/wordle/game"
-                  asChild
-               >
-                  <Pressable className="border  border-stone-800 p-3 rounded-full active:opacity-50">
-                     <Text className="text-base text-stone-800 text-center">Log In</Text>
+               <SignedOut>
+                  <Link
+                     href="/wordle/login"
+                     asChild
+                  >
+                     <Pressable className="border  border-stone-800 p-3 mt-4 rounded-full active:opacity-50">
+                        <Text className="text-base text-stone-800 text-center">Log In</Text>
+                     </Pressable>
+                  </Link>
+               </SignedOut>
+
+               <SignedIn>
+                  <Pressable
+                     onPress={() => signOut()}
+                     className="border  border-stone-800 p-3 mt-4 rounded-full active:opacity-50"
+                  >
+                     <Text className="text-base text-stone-800 text-center">Log Out</Text>
                   </Pressable>
-               </Link>
+               </SignedIn>
 
                <Pressable
-                  className="border  border-stone-800 p-3 rounded-full active:opacity-50"
+                  className="border  border-stone-800 p-3 mt-4 rounded-full active:opacity-50"
                   onPress={openSubscribeModal}
                >
                   <Text className="text-base text-stone-800 text-center">Subscribe</Text>

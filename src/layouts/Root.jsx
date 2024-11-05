@@ -5,6 +5,7 @@ import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import Toast, { BaseToast } from "react-native-toast-message"
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
+import { tokenCache } from "@/src/utils/clerkCache"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -16,7 +17,7 @@ if (!publishableKey) {
 
 const toastConfig = {
    /*
-    Overwrite 'success' type,
+    Overwrite 'info' type,
     by modifying the existing `BaseToast` component
   */
    info: (props) => (
@@ -54,16 +55,19 @@ const RootLayout = () => {
    if (!fontsLoaded && !error) return null
 
    return (
-      <ClerkProvider publishableKey={publishableKey}>
-         {/* <ClerkLoaded> */}
-         <GestureHandlerRootView className="flex-1">
-            {/* <BottomSheetModalProvider> */}
-            <StatusBar hidden={true} />
-            <Slot />
-            {/* </BottomSheetModalProvider> */}
-            <Toast config={toastConfig} />
-         </GestureHandlerRootView>
-         {/* </ClerkLoaded> */}
+      <ClerkProvider
+         publishableKey={publishableKey}
+         tokenCache={tokenCache}
+      >
+         <ClerkLoaded>
+            <GestureHandlerRootView className="flex-1">
+               {/* <BottomSheetModalProvider> */}
+               <StatusBar hidden={true} />
+               <Slot />
+               {/* </BottomSheetModalProvider> */}
+               <Toast config={toastConfig} />
+            </GestureHandlerRootView>
+         </ClerkLoaded>
       </ClerkProvider>
    )
 }
