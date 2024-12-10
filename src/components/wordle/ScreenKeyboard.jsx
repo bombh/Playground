@@ -30,7 +30,7 @@ const ScreenKeyboard = ({ onKeyPressed, greenLetters, yellowLetters, greyLetters
       <View className="mt-10">
          {keys.map((row, rowIndex) => (
             <View
-               className="flex-row justify-evenly mt-1"
+               className="flex-row justify-evenly mt-1 mb-1"
                key={`row-${rowIndex}`}
             >
                {row.map((col, colIndex) => {
