@@ -1,10 +1,11 @@
-import { View, Text, Pressable } from "react-native"
+import { View, Text, Pressable, StyleSheet } from "react-native"
 import React, { useRef, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Stack, useRouter } from "expo-router"
 import { InformationCircleIcon, ChartBarIcon, Cog8ToothIcon } from "react-native-heroicons/solid"
-import colors from "tailwindcss/colors"
+import colors, { white } from "tailwindcss/colors"
 
+import { deepClone } from "@/src/utils/array"
 import { words } from "@/data/targetWords"
 import ScreenKeyboard, { ENTER, BACKSPACE } from "@/src/components/wordle/ScreenKeyboard"
 import { allWords } from "@/data/allWords"
@@ -13,16 +14,6 @@ import { set } from "date-fns"
 // Constants
 const ROWS = 6
 const COLS = 5
-
-function deepClone(obj) {
-   if (Array.isArray(obj)) {
-      return obj.map((item) => deepClone(item))
-   } else if (typeof obj === "object") {
-      return { ...obj }
-   } else {
-      return obj
-   }
-}
 
 const Game = () => {
    const router = useRouter()
@@ -37,7 +28,6 @@ const Game = () => {
          })
       )
    )
-   //const [rows, setRows] = useState(new Array(ROWS).fill(new Array(COLS).fill("")))
    const [currentRow, setCurrentRow] = useState(0)
    const [currentCol, _setCurrentCol] = useState(0)
    //const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)])
@@ -49,13 +39,7 @@ const Game = () => {
    const [yellowLetters, setYellowLetters] = useState([])
    const [greyLetters, setGreyLetters] = useState([])
 
-   // let wordResult = new Array(COLS).fill({
-   //    letter: "",
-   //    color: "",
-   //    index: 0,
-   // })
-
-   // Reference for the current column
+   // Reference for the current column to avoid lag time when changing the state
    const currentColRef = useRef(currentCol)
    const setCurrentCol = (col) => {
       currentColRef.current = col
@@ -64,7 +48,6 @@ const Game = () => {
 
    // When a key is pressed on the keyboard
    const addKey = (key) => {
-      //const newRows = [...rows.map((row) => [...row])]
       const newGameState = deepClone(gameState)
 
       // If the key is enter
@@ -74,28 +57,22 @@ const Game = () => {
       } else if (key === BACKSPACE) {
          // If the key is backspace
          if (currentColRef.current === 0) {
-            //newRows[currentRow][0] = ""
             newGameState[currentRow][0].letter = ""
 
-            //setRows(newRows)
             setGameState(newGameState)
             return
          }
-         //newRows[currentRow][currentColRef.current - 1] = ""
+
          newGameState[currentRow][currentColRef.current - 1].letter = ""
          setCurrentCol(currentColRef.current - 1)
-
-         //setRows(newRows)
          setGameState(newGameState)
       } else if (currentColRef.current >= COLS) {
          // If the current column is GTE than the number of letters... Do nothing
          return
       } else {
          // Add the key to the current column
-         //newRows[currentRow][currentColRef.current] = key
          newGameState[currentRow][currentColRef.current].letter = key
          setCurrentCol(currentColRef.current + 1)
-         //setRows(newRows)
          setGameState(newGameState)
       }
    }
@@ -140,8 +117,6 @@ const Game = () => {
 
       // Check if yellow or white
       let undefinedLetters = newResult.filter((letter) => letter.color === "")
-      console.log("undefinedLetters", undefinedLetters)
-
       let remainingLetters = word.split("")
 
       // Remove green letters
@@ -151,6 +126,7 @@ const Game = () => {
          }
       })
 
+      // Check yellow letters
       undefinedLetters.forEach((letter) => {
          const letterIndex = remainingLetters.indexOf(letter.letter)
          if (letterIndex > -1) {
@@ -193,34 +169,29 @@ const Game = () => {
       if (currentRow > row) {
          if (gameState[row][col].color === "green") {
             return {
-               backgroundColor: colors.lime[600],
-               color: colors.white,
-               borderColor: colors.lime[600],
+               box: styles.greenBox,
+               text: styles.whiteText,
             }
          } else if (gameState[row][col].color === "yellow") {
             return {
-               backgroundColor: colors.yellow[500],
-               color: colors.white,
-               borderColor: colors.yellow[500],
+               box: styles.yellowBox,
+               text: styles.whiteText,
             }
          } else if (gameState[row][col].color === "grey") {
             return {
-               backgroundColor: colors.gray[500],
-               color: colors.white,
-               borderColor: colors.gray[500],
+               box: styles.greyBox,
+               text: styles.whiteText,
             }
          } else {
             return {
-               backgroundColor: colors.white,
-               color: colors.blue,
-               borderColor: colors.gray[400],
+               box: styles.defaultBox,
+               text: styles.defaultText,
             }
          }
       } else {
          return {
-            backgroundColor: colors.white,
-            color: colors.blue,
-            borderColor: colors.gray[400],
+            box: styles.defaultBox,
+            text: styles.defaultText,
          }
       }
    }
@@ -273,12 +244,12 @@ const Game = () => {
                >
                   {row.map((cell, colIndex) => (
                      <View
-                        style={getCellColor(rowIndex, colIndex, cell.letter)}
+                        style={getCellColor(rowIndex, colIndex, cell.letter).box}
                         key={`col-${rowIndex}-${colIndex}`}
                         className="w-1/6 aspect-square border justify-center items-center"
                      >
                         <Text
-                           style={{ color: getCellColor(rowIndex, colIndex, cell.letter).color }}
+                           style={getCellColor(rowIndex, colIndex, cell.letter).text}
                            className="font-bold text-2xl uppercase"
                         >
                            {cell.letter}
@@ -300,27 +271,29 @@ const Game = () => {
    )
 }
 
-const styles = {
-   green: {
+const styles = StyleSheet.create({
+   greenBox: {
       backgroundColor: colors.lime[600],
-      color: colors.white,
       borderColor: colors.lime[600],
    },
-   yellow: {
+   yellowBox: {
       backgroundColor: colors.yellow[500],
-      color: colors.white,
       borderColor: colors.yellow[500],
    },
-   grey: {
+   greyBox: {
       backgroundColor: colors.gray[500],
-      color: colors.white,
       borderColor: colors.gray[500],
    },
-   default: {
+   defaultBox: {
       backgroundColor: colors.white,
-      color: colors.blue,
       borderColor: colors.gray[400],
    },
-}
+   defaultText: {
+      color: colors.black,
+   },
+   whiteText: {
+      color: colors.white,
+   },
+})
 
 export default Game
