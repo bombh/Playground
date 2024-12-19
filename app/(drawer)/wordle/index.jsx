@@ -53,7 +53,7 @@ const Wordle = () => {
                      href="/wordle/login"
                      asChild
                   >
-                     <Pressable className="border  border-stone-800 p-3 mt-4 rounded-full active:opacity-50">
+                     <Pressable className="border border-stone-800 p-3 mt-4 rounded-full active:opacity-50">
                         <Text className="text-base text-stone-800 text-center">Log In</Text>
                      </Pressable>
                   </Link>
@@ -62,7 +62,7 @@ const Wordle = () => {
                <SignedIn>
                   <Pressable
                      onPress={() => signOut()}
-                     className="border  border-stone-800 p-3 mt-4 rounded-full active:opacity-50"
+                     className="border border-stone-800 p-3 mt-4 rounded-full active:opacity-50"
                   >
                      <Text className="text-base text-stone-800 text-center">Log Out</Text>
                   </Pressable>
@@ -76,9 +76,11 @@ const Wordle = () => {
                </Pressable>
             </View>
 
-            <View className="items-center absolute bottom-8">
-               <Text className="text-xs text-stone-500 font-bold">{format(new Date(), "EEEE d MMM yyyy")}</Text>
-               <Text className="text-xs text-stone-500">by bomb.H</Text>
+            <View className="items-center absolute bottom-10 gap-y-1">
+               <Text className="text-xs text-center text-stone-500">Made using</Text>
+               <Text className="text-xs text-center text-stone-500 font-bold">Clerk • Firebase • Reanimated</Text>
+               {/* <Text className="text-xs text-stone-500 font-bold">{format(new Date(), "EEEE d MMM yyyy")}</Text>
+               <Text className="text-xs text-stone-500">by bomb.H</Text> */}
             </View>
             <SubscribeModal ref={_subscribeModalRef} />
          </View>

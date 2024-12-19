@@ -42,10 +42,10 @@ const Login = () => {
    return (
       <>
          <ScreenStackFull title="" />
-         <SafeAreaView className="flex-1">
+         <SafeAreaView className="flex-1 bg-white">
             <ScrollView className="">
                {/* Title */}
-               <View>
+               <View className="mt-10">
                   <Text className="text-center font-rock text-3xl mt-2 pt-5">Log In</Text>
                   <Text className="text-sm text-stone-400 text-center px-10">
                      By continuing, you agree to our Terms of Service and Privacy Policy

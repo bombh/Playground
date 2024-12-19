@@ -12,7 +12,7 @@ import { allWords } from "@/data/allWords"
 import { set } from "date-fns"
 
 // Constants
-const ROWS = 6
+const ROWS = 1
 const COLS = 5
 
 const Game = () => {
@@ -152,10 +152,12 @@ const Game = () => {
       setTimeout(() => {
          if (newWord === word) {
             console.log("You win...")
+            router.navigate({ pathname: "/wordle/gameEnd", params: { win: true, word } })
             // TODO: go to end screen
          } else if (currentRow + 1 >= ROWS) {
             console.log("You loose...")
             // TODO: go to end screen
+            router.navigate({ pathname: "/wordle/gameEnd", params: { win: false, word } })
          }
       }, 0)
 
