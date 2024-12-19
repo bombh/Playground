@@ -4,6 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import { Stack, useRouter } from "expo-router"
 import { InformationCircleIcon, ChartBarIcon, Cog8ToothIcon } from "react-native-heroicons/solid"
 import colors, { white } from "tailwindcss/colors"
+import { MotiView } from "moti"
 
 import { deepClone } from "@/src/utils/array"
 import { words } from "@/data/targetWords"
@@ -12,7 +13,7 @@ import { allWords } from "@/data/allWords"
 import { set } from "date-fns"
 
 // Constants
-const ROWS = 1
+const ROWS = 6
 const COLS = 5
 
 const Game = () => {
@@ -125,6 +126,7 @@ const Game = () => {
             remainingLetters.splice(letter.index, 1)
          }
       })
+      newResult.reverse()
 
       // Check yellow letters
       undefinedLetters.forEach((letter) => {
@@ -133,14 +135,24 @@ const Game = () => {
             newYellowLetters.push(letter.letter)
             remainingLetters.splice(letterIndex, 1)
 
-            const wordIndex = newResult.findIndex((obj) => obj.letter === letter.letter)
-            if (wordIndex > -1) {
-               newResult[wordIndex].color = "yellow"
-            }
+            // Method 3 WORKING ...
+            newResult[letter.index].color = "yellow"
+
+            // Method 2 NOT WORKING WITH 'LLOOL'
+            // const wordIndexes = newResult
+            //    .filter((obj) => obj.letter === letter.letter && obj.color === "")
+            //    .forEach((obj) => {
+            //       newResult[obj.index].color = "yellow"
+            //    })
+
+            // Method 1 NOT WORKING WITH 'LELOO'
+            // if (wordIndex > -1) {
+            //    newResult[wordIndex].color = "yellow"
+            // }
          }
       })
 
-      newResult.reverse()
+      // console.log("newResult", newResult)
       newGameState[currentRow] = newResult
       setGameState(newGameState)
 
@@ -159,7 +171,7 @@ const Game = () => {
             // TODO: go to end screen
             router.navigate({ pathname: "/wordle/gameEnd", params: { win: false, word } })
          }
-      }, 0)
+      }, 1500)
 
       // Set cursor to next line
       setCurrentRow(currentRow + 1)
@@ -245,7 +257,10 @@ const Game = () => {
                   "
                >
                   {row.map((cell, colIndex) => (
-                     <View
+                     <MotiView
+                        from={{ opacity: 0, scale: 0.5 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        delay={rowIndex * 50 + colIndex * 50}
                         style={getCellColor(rowIndex, colIndex, cell.letter).box}
                         key={`col-${rowIndex}-${colIndex}`}
                         className="w-1/6 aspect-square border justify-center items-center"
@@ -256,18 +271,24 @@ const Game = () => {
                         >
                            {cell.letter}
                         </Text>
-                     </View>
+                     </MotiView>
                   ))}
                </View>
             ))}
 
             {/* Keyboard */}
-            <ScreenKeyboard
-               onKeyPressed={addKey}
-               greenLetters={greenLetters}
-               yellowLetters={yellowLetters}
-               greyLetters={greyLetters}
-            />
+            <MotiView
+               from={{ opacity: 0, translateY: 30 }}
+               animate={{ opacity: 1, translateY: 0 }}
+               delay={ROWS * COLS * 30}
+            >
+               <ScreenKeyboard
+                  onKeyPressed={addKey}
+                  greenLetters={greenLetters}
+                  yellowLetters={yellowLetters}
+                  greyLetters={greyLetters}
+               />
+            </MotiView>
          </View>
       </>
    )
