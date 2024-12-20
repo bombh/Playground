@@ -6,7 +6,7 @@ import { MotiView } from "moti"
 import Toast from "react-native-toast-message"
 
 import { deepClone } from "@/src/utils/array"
-import { words } from "@/data/targetWords"
+import { words } from "@/data/targetWordsFR"
 import ScreenKeyboard, { ENTER, BACKSPACE } from "@/src/components/wordle/ScreenKeyboard"
 import Letter from "@/src/components/wordle/Letter"
 import { ROWS, COLS } from "@/src/constants/wordle"
@@ -32,8 +32,8 @@ const Game = () => {
    )
    const [currentRow, setCurrentRow] = useState(0)
    const [currentCol, _setCurrentCol] = useState(0)
-   //const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)])
-   const [word, setWord] = useState("hello")
+   const [word, setWord] = useState(words[Math.floor(Math.random() * words.length)])
+   //const [word, setWord] = useState("hello")
    const wordLetter = word.split("")
 
    // Get letters for the keyboard
@@ -220,28 +220,28 @@ const Game = () => {
                   fontSize: 17,
                },
                headerTintColor: "#000",
-               headerRight: () => (
-                  <View className="flex-row gap-3">
-                     <Pressable className="active:opacity-50">
-                        <InformationCircleIcon
-                           size={24}
-                           color="#000"
-                        />
-                     </Pressable>
-                     <Pressable className="active:opacity-50">
-                        <ChartBarIcon
-                           size={24}
-                           color="#000"
-                        />
-                     </Pressable>
-                     <Pressable className="active:opacity-50">
-                        <Cog8ToothIcon
-                           size={24}
-                           color="#000"
-                        />
-                     </Pressable>
-                  </View>
-               ),
+               // headerRight: () => (
+               //    <View className="flex-row gap-3">
+               //       <Pressable className="active:opacity-50">
+               //          <InformationCircleIcon
+               //             size={24}
+               //             color="#000"
+               //          />
+               //       </Pressable>
+               //       <Pressable className="active:opacity-50">
+               //          <ChartBarIcon
+               //             size={24}
+               //             color="#000"
+               //          />
+               //       </Pressable>
+               //       <Pressable className="active:opacity-50">
+               //          <Cog8ToothIcon
+               //             size={24}
+               //             color="#000"
+               //          />
+               //       </Pressable>
+               //    </View>
+               // ),
             }}
          />
 

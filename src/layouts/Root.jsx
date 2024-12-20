@@ -6,6 +6,7 @@ import { useEffect } from "react"
 import Toast, { BaseToast } from "react-native-toast-message"
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
 import { tokenCache } from "@/src/utils/clerkCache"
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 SplashScreen.preventAutoHideAsync()
 
@@ -61,10 +62,10 @@ const RootLayout = () => {
       >
          <ClerkLoaded>
             <GestureHandlerRootView className="flex-1">
-               {/* <BottomSheetModalProvider> */}
-               <StatusBar hidden={true} />
-               <Slot />
-               {/* </BottomSheetModalProvider> */}
+               <BottomSheetModalProvider>
+                  <StatusBar hidden={true} />
+                  <Slot />
+               </BottomSheetModalProvider>
                <Toast config={toastConfig} />
             </GestureHandlerRootView>
          </ClerkLoaded>

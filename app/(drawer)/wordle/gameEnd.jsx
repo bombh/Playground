@@ -9,6 +9,7 @@ import { XCircleIcon } from "react-native-heroicons/outline"
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "@/src/utils/firebaseConfig"
+import { COLORS } from "@/src/constants/wordle"
 import { set } from "date-fns"
 
 const gameEnd = () => {
@@ -67,7 +68,7 @@ const gameEnd = () => {
 
    return (
       <>
-         <SafeAreaView className="flex-1 bg-white">
+         <SafeAreaView className="flex-1 bg-white relative">
             {/* <View className="flex-row justify-end px-5 pt-5">
                <Pressable
                   className="active:opacity-50"
@@ -79,7 +80,7 @@ const gameEnd = () => {
                   />
                </Pressable>
             </View> */}
-            <View className="items-center justify-center mt-5">
+            <View className="items-center justify-center mt-5 ">
                {win === "true" ? (
                   <Image source={require("@/assets/images/wordle/win.png")} />
                ) : (
@@ -90,10 +91,11 @@ const gameEnd = () => {
                   />
                )}
 
-               <Text className="font-rock text-3xl mt-4 pt-5">{win === "true" ? "Congrats" : "Missed ..."}</Text>
-               <Text className="text-lg text-stone-400 text-center px-20">
+               <Text className="text-2xl font-bold mt-4 pt-5">{win === "true" ? "Congrats" : "Missed ..."}</Text>
+               <Text className="text-base text-stone-400 text-center px-20">
                   {win === "true" ? "You have successfully guessed the word" : "You have missed the word. Try again..."}
                </Text>
+               <Text className="text-5xl font-rock text-center px-20 pt-10">{word}</Text>
                <View className="w-full mt-8 px-16">
                   <SignedIn>
                      <Text className="text-sm text-center">Your Statistics</Text>
@@ -111,32 +113,34 @@ const gameEnd = () => {
                            <Text className="text-stone-400">Streaks</Text>
                         </View>
                      </View>
-
-                     <Pressable
-                        className="bg-stone-800 p-3 mt-8 rounded-full active:opacity-70"
-                        onPress={() => navigateToRoot()}
-                     >
-                        <Text className="text-base text-white text-center">Play Again</Text>
-                     </Pressable>
                   </SignedIn>
 
                   <SignedOut>
-                     <Text className="text-sm">Want to see your stats and streaks?</Text>
+                     <Text className="text-sm text-center">Want to see your stats and streaks?</Text>
                      <Pressable
-                        className="bg-stone-800 p-3 mt-8 rounded-full active:opacity-50"
+                        className="bg-stone-800 p-3 mt-4 rounded-full active:opacity-50"
                         onPress={() => router.navigate("/wordle/login")}
                      >
                         <Text className="text-base text-white text-center">Create an account</Text>
                      </Pressable>
 
                      <Pressable
-                        className="p-3 mt-4 active:opacity-50"
+                        className="p-3 mt-4 border rounded-full active:opacity-50"
                         onPress={() => router.navigate("/wordle/login")}
                      >
                         <Text className="text-base text-stone-800 text-center">Already registered ? Log in</Text>
                      </Pressable>
                   </SignedOut>
                </View>
+            </View>
+            <View className="absolute bottom-10 w-full px-16">
+               <Pressable
+                  style={{ backgroundColor: COLORS.green }}
+                  className=" bg-stone-800 p-3 my-8 rounded-full active:opacity-70"
+                  onPress={() => navigateToRoot()}
+               >
+                  <Text className="text-base text-white text-center">Play Again</Text>
+               </Pressable>
             </View>
          </SafeAreaView>
       </>
