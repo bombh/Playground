@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Stack, useRouter } from "expo-router"
 import { InformationCircleIcon, ChartBarIcon, Cog8ToothIcon } from "react-native-heroicons/solid"
-import colors, { white } from "tailwindcss/colors"
+import colors from "tailwindcss/colors"
 import { MotiView } from "moti"
 
 import { deepClone } from "@/src/utils/array"
@@ -11,6 +11,7 @@ import { words } from "@/data/targetWords"
 import ScreenKeyboard, { ENTER, BACKSPACE } from "@/src/components/wordle/ScreenKeyboard"
 import { allWords } from "@/data/allWords"
 import { set } from "date-fns"
+import Letter from "@/src/components/wordle/Letter"
 
 // Constants
 const ROWS = 6
@@ -95,6 +96,7 @@ const Game = () => {
 
       if (!allWords.includes(newWord)) {
          console.log("Not a word...")
+         console.log("----------------------")
       }
 
       const newGreenLetters = []
@@ -210,6 +212,26 @@ const Game = () => {
       }
    }
 
+   const getLetterColor = (row, col, cell) => {
+      if (currentRow > row) {
+         if (gameState[row][col].color === "green") {
+            return "green"
+         } else if (gameState[row][col].color === "yellow") {
+            return "yellow"
+         } else if (gameState[row][col].color === "grey") {
+            return "grey"
+         } else {
+            return "default"
+         }
+      } else {
+         return ""
+      }
+   }
+
+   console.log("----------------------")
+   console.log("word", word)
+   console.log("----------------------")
+
    return (
       <>
          <Stack.Screen
@@ -256,23 +278,33 @@ const Game = () => {
                   className="w-full flex-row mt-3 justify-between
                   "
                >
-                  {row.map((cell, colIndex) => (
-                     <MotiView
-                        from={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        delay={rowIndex * 50 + colIndex * 50}
-                        style={getCellColor(rowIndex, colIndex, cell.letter).box}
-                        key={`col-${rowIndex}-${colIndex}`}
-                        className="w-1/6 aspect-square border justify-center items-center"
-                     >
-                        <Text
-                           style={getCellColor(rowIndex, colIndex, cell.letter).text}
-                           className="font-bold text-2xl uppercase"
-                        >
-                           {cell.letter}
-                        </Text>
-                     </MotiView>
-                  ))}
+                  {row.map((cell, colIndex) => {
+                     //console.log("cell", cell)
+                     return (
+                        <Letter
+                           key={`col-${rowIndex}-${colIndex}`}
+                           row={rowIndex}
+                           col={colIndex}
+                           cell={cell}
+                           color={getLetterColor(rowIndex, colIndex, cell)}
+                        />
+                        // <MotiView
+                        //    from={{ opacity: 0, scale: 0.5 }}
+                        //    animate={{ opacity: 1, scale: 1 }}
+                        //    delay={rowIndex * 50 + colIndex * 50}
+                        //    style={getCellColor(rowIndex, colIndex, cell.letter).box}
+                        //    key={}
+                        //    className="w-1/6 aspect-square border justify-center items-center"
+                        // >
+                        //    <Text
+                        //       style={getCellColor(rowIndex, colIndex, cell.letter).text}
+                        //       className="font-bold text-2xl uppercase"
+                        //    >
+                        //
+                        //    </Text>
+                        // </MotiView>
+                     )
+                  })}
                </View>
             ))}
 

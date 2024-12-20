@@ -13,6 +13,7 @@ import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo"
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
 import Icon from "@/assets/images/wordle/icon.svg"
 import SubscribeModal from "@/src/components/wordle/SubscribeModal"
+import Letter from "@/src/components/wordle/Letter"
 
 const Wordle = () => {
    const { signOut } = useAuth()
