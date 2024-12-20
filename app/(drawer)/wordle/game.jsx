@@ -1,24 +1,24 @@
-import { View, Text, Pressable, StyleSheet } from "react-native"
-import React, { useRef, useState } from "react"
-import { SafeAreaView } from "react-native-safe-area-context"
-import { Stack, useRouter } from "expo-router"
+import { View, Text, Pressable, StyleSheet, ActivityIndicator } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import { Stack, useFocusEffect, useRouter } from "expo-router"
 import { InformationCircleIcon, ChartBarIcon, Cog8ToothIcon } from "react-native-heroicons/solid"
-import colors from "tailwindcss/colors"
 import { MotiView } from "moti"
+import Toast from "react-native-toast-message"
 
 import { deepClone } from "@/src/utils/array"
 import { words } from "@/data/targetWords"
 import ScreenKeyboard, { ENTER, BACKSPACE } from "@/src/components/wordle/ScreenKeyboard"
-import { allWords } from "@/data/allWords"
-import { set } from "date-fns"
 import Letter from "@/src/components/wordle/Letter"
+import { ROWS, COLS } from "@/src/constants/wordle"
 
 // Constants
-const ROWS = 6
-const COLS = 5
+// const ROWS = 1
+// const COLS = 5
 
 const Game = () => {
    const router = useRouter()
+
+   const [isLoaded, setIsLoaded] = useState(false)
 
    // States for the game
    const [gameState, setGameState] = useState(
@@ -47,6 +47,15 @@ const Game = () => {
       currentColRef.current = col
       _setCurrentCol(col)
    }
+
+   useEffect(() => {
+      setTimeout(() => {
+         setIsLoaded(true)
+      }, 100)
+
+      // Clean up
+      return () => {}
+   }, [])
 
    // When a key is pressed on the keyboard
    const addKey = (key) => {
@@ -90,14 +99,18 @@ const Game = () => {
       })
 
       if (newWord.length < COLS) {
-         console.log("Too short word...")
+         //console.log("Too short word...")
+         Toast.show({
+            type: "info",
+            text1: "Missing letters !",
+            text2: "Each word must have 5 letters.",
+         })
          return
       }
 
-      if (!allWords.includes(newWord)) {
-         console.log("Not a word...")
-         console.log("----------------------")
-      }
+      // if (!allWords.includes(newWord)) {
+
+      // }
 
       const newGreenLetters = []
       const newYellowLetters = []
@@ -165,12 +178,10 @@ const Game = () => {
       // Go to end screen
       setTimeout(() => {
          if (newWord === word) {
-            console.log("You win...")
+            //console.log("You win...")
             router.navigate({ pathname: "/wordle/gameEnd", params: { win: true, word } })
-            // TODO: go to end screen
          } else if (currentRow + 1 >= ROWS) {
-            console.log("You loose...")
-            // TODO: go to end screen
+            //console.log("You loose...")
             router.navigate({ pathname: "/wordle/gameEnd", params: { win: false, word } })
          }
       }, 1500)
@@ -180,38 +191,7 @@ const Game = () => {
       setCurrentCol(0)
    }
 
-   // Get Colors
-   const getCellColor = (row, col, cell) => {
-      if (currentRow > row) {
-         if (gameState[row][col].color === "green") {
-            return {
-               box: styles.greenBox,
-               text: styles.whiteText,
-            }
-         } else if (gameState[row][col].color === "yellow") {
-            return {
-               box: styles.yellowBox,
-               text: styles.whiteText,
-            }
-         } else if (gameState[row][col].color === "grey") {
-            return {
-               box: styles.greyBox,
-               text: styles.whiteText,
-            }
-         } else {
-            return {
-               box: styles.defaultBox,
-               text: styles.defaultText,
-            }
-         }
-      } else {
-         return {
-            box: styles.defaultBox,
-            text: styles.defaultText,
-         }
-      }
-   }
-
+   // Get Colors for each letter
    const getLetterColor = (row, col, cell) => {
       if (currentRow > row) {
          if (gameState[row][col].color === "green") {
@@ -227,10 +207,6 @@ const Game = () => {
          return ""
       }
    }
-
-   console.log("----------------------")
-   console.log("word", word)
-   console.log("----------------------")
 
    return (
       <>
@@ -270,85 +246,71 @@ const Game = () => {
          />
 
          {/* Main page */}
-         <View className="flex-1 p-5">
-            {/* Game field */}
-            {gameState.map((row, rowIndex) => (
-               <View
-                  key={`row-${rowIndex}`}
-                  className="w-full flex-row mt-3 justify-between
-                  "
-               >
-                  {row.map((cell, colIndex) => {
-                     //console.log("cell", cell)
-                     return (
-                        <Letter
-                           key={`col-${rowIndex}-${colIndex}`}
-                           row={rowIndex}
-                           col={colIndex}
-                           cell={cell}
-                           color={getLetterColor(rowIndex, colIndex, cell)}
-                        />
-                        // <MotiView
-                        //    from={{ opacity: 0, scale: 0.5 }}
-                        //    animate={{ opacity: 1, scale: 1 }}
-                        //    delay={rowIndex * 50 + colIndex * 50}
-                        //    style={getCellColor(rowIndex, colIndex, cell.letter).box}
-                        //    key={}
-                        //    className="w-1/6 aspect-square border justify-center items-center"
-                        // >
-                        //    <Text
-                        //       style={getCellColor(rowIndex, colIndex, cell.letter).text}
-                        //       className="font-bold text-2xl uppercase"
-                        //    >
-                        //
-                        //    </Text>
-                        // </MotiView>
-                     )
-                  })}
-               </View>
-            ))}
-
-            {/* Keyboard */}
-            <MotiView
-               from={{ opacity: 0, translateY: 30 }}
-               animate={{ opacity: 1, translateY: 0 }}
-               delay={ROWS * COLS * 30}
-            >
-               <ScreenKeyboard
-                  onKeyPressed={addKey}
-                  greenLetters={greenLetters}
-                  yellowLetters={yellowLetters}
-                  greyLetters={greyLetters}
+         {!isLoaded && (
+            <View className="flex-1 -mt-24 justify-center items-center">
+               <ActivityIndicator
+                  size={"large"}
+                  color={"black"}
                />
-            </MotiView>
-         </View>
+            </View>
+         )}
+
+         {isLoaded && (
+            <View className="flex-1 p-5">
+               {/* Game field */}
+               {gameState.map((row, rowIndex) => (
+                  <View
+                     key={`row-${rowIndex}`}
+                     className="w-full flex-row mt-3 justify-between
+                  "
+                  >
+                     {row.map((cell, colIndex) => {
+                        //console.log("cell", cell)
+                        return (
+                           <Letter
+                              key={`col-${rowIndex}-${colIndex}`}
+                              row={rowIndex}
+                              col={colIndex}
+                              cell={cell}
+                              color={getLetterColor(rowIndex, colIndex, cell)}
+                           />
+                           // <MotiView
+                           //    from={{ opacity: 0, scale: 0.5 }}
+                           //    animate={{ opacity: 1, scale: 1 }}
+                           //    delay={rowIndex * 50 + colIndex * 50}
+                           //    style={getCellColor(rowIndex, colIndex, cell.letter).box}
+                           //    key={}
+                           //    className="w-1/6 aspect-square border justify-center items-center"
+                           // >
+                           //    <Text
+                           //       style={getCellColor(rowIndex, colIndex, cell.letter).text}
+                           //       className="font-bold text-2xl uppercase"
+                           //    >
+                           //
+                           //    </Text>
+                           // </MotiView>
+                        )
+                     })}
+                  </View>
+               ))}
+
+               {/* Keyboard */}
+               <MotiView
+                  from={{ opacity: 0, translateY: 30 }}
+                  animate={{ opacity: 1, translateY: 0 }}
+                  delay={0}
+               >
+                  <ScreenKeyboard
+                     onKeyPressed={addKey}
+                     greenLetters={greenLetters}
+                     yellowLetters={yellowLetters}
+                     greyLetters={greyLetters}
+                  />
+               </MotiView>
+            </View>
+         )}
       </>
    )
 }
-
-const styles = StyleSheet.create({
-   greenBox: {
-      backgroundColor: colors.lime[600],
-      borderColor: colors.lime[600],
-   },
-   yellowBox: {
-      backgroundColor: colors.yellow[500],
-      borderColor: colors.yellow[500],
-   },
-   greyBox: {
-      backgroundColor: colors.gray[500],
-      borderColor: colors.gray[500],
-   },
-   defaultBox: {
-      backgroundColor: colors.white,
-      borderColor: colors.gray[400],
-   },
-   defaultText: {
-      color: colors.black,
-   },
-   whiteText: {
-      color: colors.white,
-   },
-})
 
 export default Game

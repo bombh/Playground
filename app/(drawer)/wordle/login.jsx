@@ -35,7 +35,7 @@ const Login = () => {
             router.back()
          }
       } catch (error) {
-         console.error(error)
+         //console.error(error)
       }
    }
 

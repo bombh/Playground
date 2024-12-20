@@ -15,7 +15,7 @@ const gameEnd = () => {
    const router = useRouter()
    const { win, word } = useLocalSearchParams()
 
-   console.log("win", win, typeof win)
+   //console.log("win", win, typeof win)
 
    const [userSore, setUserScore] = useState()
 
@@ -28,7 +28,7 @@ const gameEnd = () => {
    }, [user])
 
    const updateHighScore = async () => {
-      console.log("user", user)
+      //console.log("user", user)
 
       if (!user) return
 
@@ -68,8 +68,7 @@ const gameEnd = () => {
    return (
       <>
          <SafeAreaView className="flex-1 bg-white">
-            <View className="flex-row justify-end px-5 pt-5">
-               {/* <Text>Log In</Text> */}
+            {/* <View className="flex-row justify-end px-5 pt-5">
                <Pressable
                   className="active:opacity-50"
                   onPress={navigateToRoot}
@@ -79,7 +78,7 @@ const gameEnd = () => {
                      color={"#000"}
                   />
                </Pressable>
-            </View>
+            </View> */}
             <View className="items-center justify-center mt-5">
                {win === "true" ? (
                   <Image source={require("@/assets/images/wordle/win.png")} />

@@ -1,6 +1,7 @@
 import { View, Text, useWindowDimensions, Pressable } from "react-native"
 import React from "react"
 import { BackspaceIcon, PaperAirplaneIcon } from "react-native-heroicons/solid"
+import { COLORS } from "@/src/constants/wordle"
 
 export const ENTER = "ENTER"
 export const BACKSPACE = "BACKSPACE"
@@ -20,10 +21,10 @@ const ScreenKeyboard = ({ onKeyPressed, greenLetters, yellowLetters, greyLetters
    const isSpecialKey = (key) => key === ENTER || key === BACKSPACE
    const isInLetters = (key) => [...greenLetters, ...yellowLetters, ...greyLetters].includes(key)
    const getColorLetter = (key) => {
-      if (greenLetters.includes(key)) return "bg-lime-600"
-      if (yellowLetters.includes(key)) return "bg-yellow-500"
-      if (greyLetters.includes(key)) return "bg-gray-500"
-      return "bg-stone-300"
+      if (greenLetters.includes(key)) return COLORS.green
+      if (yellowLetters.includes(key)) return COLORS.yellow
+      if (greyLetters.includes(key)) return COLORS.grey
+      return COLORS.lightGrey
    }
 
    return (
@@ -34,15 +35,18 @@ const ScreenKeyboard = ({ onKeyPressed, greenLetters, yellowLetters, greyLetters
                key={`row-${rowIndex}`}
             >
                {row.map((col, colIndex) => {
-                  const bgColor = getColorLetter(col)
                   const textColor = isInLetters(col) ? "text-white" : "text-black"
                   const colWidth = isSpecialKey(col) ? keyWidthSpecial : keyWidth
 
                   return (
                      <Pressable
                         onPress={() => onKeyPressed(col)}
-                        style={{ width: colWidth, height: keyHeight }}
-                        className={`${bgColor} items-center justify-center rounded-md active:opacity-70`}
+                        style={{
+                           width: colWidth,
+                           height: keyHeight,
+                           backgroundColor: getColorLetter(col),
+                        }}
+                        className={`items-center justify-center rounded-md active:opacity-70`}
                         key={`col-${rowIndex}-${colIndex}`}
                      >
                         {isSpecialKey(col) ? (

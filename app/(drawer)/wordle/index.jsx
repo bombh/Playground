@@ -80,8 +80,6 @@ const Wordle = () => {
             <View className="items-center absolute bottom-10 gap-y-1">
                <Text className="text-xs text-center text-stone-500">Made using</Text>
                <Text className="text-xs text-center text-stone-500 font-bold">Clerk • Firebase • Reanimated</Text>
-               {/* <Text className="text-xs text-stone-500 font-bold">{format(new Date(), "EEEE d MMM yyyy")}</Text>
-               <Text className="text-xs text-stone-500">by bomb.H</Text> */}
             </View>
             <SubscribeModal ref={_subscribeModalRef} />
          </View>

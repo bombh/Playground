@@ -9,6 +9,8 @@ import {
 } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
+import { set } from "date-fns"
+
 // Drawer content
 const AppDrawerContent = (props) => {
    return (
@@ -28,6 +30,8 @@ const AppDrawerContent = (props) => {
             <DrawerItemList {...props} />
          </DrawerContentScrollView>
          <Text className="absolute bottom-6 text-stone-500 text-xs w-full text-center ">Version 1.0.0</Text>
+         {/* <Text className="text-xs text-stone-500 font-bold">{format(new Date(), "EEEE d MMM yyyy")}</Text>
+               <Text className="text-xs text-stone-500">by bomb.H</Text> */}
       </>
    )
 }

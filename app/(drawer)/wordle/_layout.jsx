@@ -9,15 +9,7 @@ const StackLayout = () => {
       >
          <Stack.Screen name="index" />
          <Stack.Screen name="game" />
-         <Stack.Screen
-            name="gameEnd"
-            options={
-               {
-                  //headerShown: true,
-                  //presentation: "fullScreenModal",
-               }
-            }
-         />
+         <Stack.Screen name="gameEnd" />
          <Stack.Screen
             name="login"
             options={{
