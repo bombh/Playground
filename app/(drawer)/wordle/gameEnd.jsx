@@ -95,7 +95,7 @@ const gameEnd = () => {
                <Text className="text-base text-stone-400 text-center px-20">
                   {win === "true" ? "You have successfully guessed the word" : "You have missed the word. Try again..."}
                </Text>
-               <Text className="text-5xl font-rock text-center px-20 pt-10">{word}</Text>
+               <Text className="text-5xl font-rock text-center px-20 pt-12">{word}</Text>
                <View className="w-full mt-8 px-16">
                   <SignedIn>
                      <Text className="text-sm text-center">Your Statistics</Text>

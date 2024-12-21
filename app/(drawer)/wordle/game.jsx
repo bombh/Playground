@@ -219,6 +219,7 @@ const Game = () => {
                   fontFamily: "RockSalt-Regular",
                   fontSize: 17,
                },
+               headerShadowVisible: false,
                headerTintColor: "#000",
                // headerRight: () => (
                //    <View className="flex-row gap-3">
@@ -247,7 +248,7 @@ const Game = () => {
 
          {/* Main page */}
          {!isLoaded && (
-            <View className="flex-1 -mt-24 justify-center items-center">
+            <View className="flex-1 bg-white -mt-24 justify-center items-center">
                <ActivityIndicator
                   size={"large"}
                   color={"black"}
@@ -256,7 +257,7 @@ const Game = () => {
          )}
 
          {isLoaded && (
-            <View className="flex-1 p-5">
+            <View className="flex-1  p-5">
                {/* Game field */}
                {gameState.map((row, rowIndex) => (
                   <View
