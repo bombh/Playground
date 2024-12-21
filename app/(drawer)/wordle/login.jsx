@@ -29,13 +29,14 @@ const Login = () => {
 
       try {
          const { createdSessionId, setActive } = await selectedAuth()
-
+         console.log("Clerk: selectAuth()")
          if (createdSessionId) {
+            console.log("Clerk: setActive()", createdSessionId)
             setActive({ session: createdSessionId })
             router.back()
          }
       } catch (error) {
-         //console.error(error)
+         console.error("Login error", error)
       }
    }
 

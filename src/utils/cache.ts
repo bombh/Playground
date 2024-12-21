@@ -1,9 +1,10 @@
 import * as SecureStore from "expo-secure-store"
 import { Platform } from "react-native"
+import { TokenCache } from "@clerk/clerk-expo/dist/cache"
 
-const createTokenCache = () => {
-   const tokenCache = {
-      async getToken(key) {
+const createTokenCache = (): TokenCache => {
+   return {
+      getToken: async (key: string) => {
          try {
             const item = await SecureStore.getItemAsync(key)
             if (item) {
@@ -13,20 +14,17 @@ const createTokenCache = () => {
             }
             return item
          } catch (error) {
-            console.error("SecureStore get item error: ", error)
+            console.error("secure store get item error: ", error)
             await SecureStore.deleteItemAsync(key)
             return null
          }
       },
-      async saveToken(key, value) {
-         try {
-            return SecureStore.setItemAsync(key, value)
-         } catch (err) {
-            return
-         }
+      saveToken: (key: string, token: string) => {
+         console.log("saveToken in secure store: ", key, token)
+         return SecureStore.setItemAsync(key, token)
       },
    }
 }
 
-// Secure Store not supported on web
+// SecureStore is not supported on the web
 export const tokenCache = Platform.OS !== "web" ? createTokenCache() : undefined

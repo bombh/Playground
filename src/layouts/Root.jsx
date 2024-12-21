@@ -5,7 +5,7 @@ import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import Toast, { BaseToast } from "react-native-toast-message"
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
-import { tokenCache } from "@/src/utils/clerkCache"
+import { tokenCache } from "@/src/utils/cache"
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 SplashScreen.preventAutoHideAsync()
