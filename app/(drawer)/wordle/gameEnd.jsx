@@ -41,8 +41,8 @@ const gameEnd = () => {
          played: 1,
          wins: win === "true" ? 1 : 0,
          lastGame: win === "true" ? "win" : "loss",
-         lastWord: word,
          currentStreak: win === "true" ? 1 : 0,
+         history: [{ date: new Date(), word, win: win === "true" ? 1 : 0 }],
       }
 
       if (docSnap.exists()) {
@@ -52,8 +52,8 @@ const gameEnd = () => {
             played: data.played + 1,
             wins: win === "true" ? data.wins + 1 : data.wins,
             lastGame: win === "true" ? "win" : "loss",
-            lastWord: word,
             currentStreak: win === "true" && data.lastGame === "win" ? data.currentStreak + 1 : win === "true" ? 1 : 0,
+            history: [...data.history, { date: new Date(), word, win: win === "true" ? 1 : 0 }],
          }
       }
 
