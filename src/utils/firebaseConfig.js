@@ -9,13 +9,13 @@ import { getFirestore } from "firebase/firestore"
 
 // Initialize Firebase
 const firebaseConfig = {
-   apiKey: "AIzaSyBkQFmcyLf2_GZSa71twPsclzpxkra-8MA",
-   authDomain: "wordle-ed8fe.firebaseapp.com",
-   projectId: "wordle-ed8fe",
-   databaseURL: "https://wordle-ed8fe.firebaseio.com",
-   storageBucket: "wordle-ed8fe.firebasestorage.app",
-   messagingSenderId: "389552907914",
-   appId: "1:389552907914:web:d23e00ffbb4c62ff43ef73",
+   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+   authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+   projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+   databaseURL: process.env.EXPO_PUBLIC_FIREBASE_DATABASE_URL,
+   storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+   messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
 }
 
 const app = initializeApp(firebaseConfig)
