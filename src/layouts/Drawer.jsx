@@ -6,6 +6,7 @@ import {
    BeakerIcon,
    CursorArrowRippleIcon,
    Squares2X2Icon,
+   PhotoIcon,
 } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
@@ -81,6 +82,21 @@ const DrawerLayout = () => {
                title: "",
                drawerIcon: ({ color }) => (
                   <CursorArrowRippleIcon
+                     size={16}
+                     color={color}
+                     style={{ marginRight: 5 }}
+                  />
+               ),
+            }}
+         />
+
+         <Drawer.Screen
+            name="photos"
+            options={{
+               drawerLabel: "Gallery",
+               title: "",
+               drawerIcon: ({ color }) => (
+                  <PhotoIcon
                      size={16}
                      color={color}
                      style={{ marginRight: 5 }}
