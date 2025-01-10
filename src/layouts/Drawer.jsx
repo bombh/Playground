@@ -7,10 +7,9 @@ import {
    CursorArrowRippleIcon,
    Squares2X2Icon,
    PhotoIcon,
+   ArrowTrendingUpIcon,
 } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
-
-import { set } from "date-fns"
 
 // Drawer content
 const AppDrawerContent = (props) => {
@@ -112,6 +111,21 @@ const DrawerLayout = () => {
                title: "",
                drawerIcon: ({ color }) => (
                   <Squares2X2Icon
+                     size={16}
+                     color={color}
+                     style={{ marginRight: 5 }}
+                  />
+               ),
+            }}
+         />
+
+         <Drawer.Screen
+            name="smoking"
+            options={{
+               drawerLabel: "Smoking",
+               title: "",
+               drawerIcon: ({ color }) => (
+                  <ArrowTrendingUpIcon
                      size={16}
                      color={color}
                      style={{ marginRight: 5 }}
