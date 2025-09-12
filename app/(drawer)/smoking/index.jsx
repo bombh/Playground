@@ -8,6 +8,8 @@ import colors from "tailwindcss/colors"
 const begin = new Date(2025, 0, 5, 2, 0, 0, 0)
 
 const AnimatedList = () => {
+   const total = differenceInDays(new Date(), begin) * 12.5
+
    return (
       <>
          <ScreenDrawer title="No smoking" />
@@ -37,13 +39,15 @@ const AnimatedList = () => {
                <Text className="font-bold">{differenceInDays(new Date(), begin)} </Text>
                days
                {"\n ( "}
-               <Text className="font-bold">{differenceInMinutes(new Date(), begin)} </Text>
-               minutes )
+               <Text className="font-bold">{differenceInMinutes(new Date(), begin).toLocaleString()} </Text>
+               minutes ){"\n ( "}
+               <Text className="font-bold">{differenceInSeconds(new Date(), begin).toLocaleString()} </Text>
+               secondes )
             </Text>
 
             <View className="bg-red-500 p-5 rounded-lg items-center">
                <Text className="text-4xl text-white ">
-                  <Text className="font-bold">{differenceInDays(new Date(), begin) * 11}</Text>€
+                  <Text className="font-bold">{total.toLocaleString()}</Text> €
                </Text>
                <Text className="text-white">savings</Text>
             </View>
