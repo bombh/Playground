@@ -6,9 +6,10 @@ import { ArrowTrendingUpIcon } from "react-native-heroicons/outline"
 import colors from "tailwindcss/colors"
 
 const begin = new Date(2025, 0, 5, 2, 0, 0, 0)
+const pricePerPack = 12.5 // euros
 
 const AnimatedList = () => {
-   const total = differenceInDays(new Date(), begin) * 12.5
+   const total = Math.floor(differenceInDays(new Date(), begin)) * pricePerPack
 
    return (
       <>
