@@ -3,6 +3,11 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 Use context7 MCP when needed.
 
+## Update to new Expo SDK 54
+
+The goal is to update the code and dependancies to the new Expo SDK 54.
+Use context7 for this !
+
 ## Project Overview
 
 This is a React Native Expo project named "Playground" - a mobile application serving as a showcase/playground for various UI components and mini-applications including animated carousels, an image gallery, a Wordle game clone, and a smoking tracker.
