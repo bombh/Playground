@@ -1,7 +1,6 @@
 import { View, Text, Image, Pressable } from "react-native"
-import BottomSheet, { BottomSheetBackdrop, BottomSheetScrollView } from "@gorhom/bottom-sheet"
-import { forwardRef, useCallback, useMemo } from "react"
-import { styled } from "nativewind"
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet"
+import { forwardRef, useMemo } from "react"
 import { XCircleIcon } from "react-native-heroicons/outline"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Toast from "react-native-toast-message"
@@ -31,32 +30,15 @@ const SubscribeModal = forwardRef(({}, ref) => {
       dismiss()
    }
 
-   // Render backdrop for Bottom Sheet
-   const renderBackdrop = useCallback(
-      (props) => (
-         <BottomSheetBackdrop
-            opacity={0.1}
-            appearsOnIndex={0}
-            disappearsOnIndex={-1}
-            enableTouchThrough={false}
-            {...props}
-         />
-      ),
-      []
-   )
-
-   const StyledBottomSheet = styled(BottomSheet)
-   const StyledBottomSheetScrollView = styled(BottomSheetScrollView)
-
    return (
-      <StyledBottomSheet
-         index={1}
+      <BottomSheet
+         index={-1}
          ref={ref}
          snapPoints={snapPoints}
          //backdropComponent={renderBackdrop}
          enablePanDownToClose={true}
          handleComponent={null}
-         className="bg-transparent"
+         style={{ backgroundColor: "transparent" }}
       >
          <View className="flex-row justify-end px-5 pt-5">
             {/* <Text>Log In</Text> */}
@@ -70,7 +52,7 @@ const SubscribeModal = forwardRef(({}, ref) => {
                />
             </Pressable>
          </View>
-         <StyledBottomSheetScrollView className="bg-white rounded-t-3xl flex-1 ">
+         <BottomSheetScrollView className="bg-white rounded-t-3xl flex-1 ">
             <View className="px-8">
                <Text className="text-3xl font-rock text-center pt-5">Unlimited Play</Text>
                <Text className="text-xl text-center px-20 -mt-3">Try free for 7 days</Text>
@@ -115,7 +97,7 @@ const SubscribeModal = forwardRef(({}, ref) => {
                   account settings.
                </Text>
             </View>
-         </StyledBottomSheetScrollView>
+         </BottomSheetScrollView>
 
          <View
             className="bg-white rounded-b-3xl py-5 shadow"
@@ -131,7 +113,7 @@ const SubscribeModal = forwardRef(({}, ref) => {
                2,99 €/month after 7-day trial. Cancel anytime.
             </Text>
          </View>
-      </StyledBottomSheet>
+      </BottomSheet>
    )
 })
 

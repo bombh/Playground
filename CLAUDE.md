@@ -3,11 +3,6 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 Use context7 MCP when needed.
 
-## Update to new Expo SDK 54
-
-The goal is to update the code and dependancies to the new Expo SDK 54.
-Use context7 for this !
-
 ## Project Overview
 
 This is a React Native Expo project named "Playground" - a mobile application serving as a showcase/playground for various UI components and mini-applications including animated carousels, an image gallery, a Wordle game clone, and a smoking tracker.
@@ -54,10 +49,11 @@ This project uses Expo Router with a file-based routing system. Routes are defin
 
 **Styling:**
 
--  NativeWind v2 (Tailwind CSS for React Native)
+-  NativeWind v4 (Tailwind CSS for React Native)
 -  Dark mode supported via `darkMode: "class"` in `tailwind.config.js`
 -  Custom font: "RockSalt-Regular" loaded in Root layout
 -  TailwindCSS scans: `app/**/*.{js,jsx,ts,tsx}` and `src/**/*.{js,jsx,ts,tsx}`
+-  Uses NativeWind preset in `tailwind.config.js`
 
 **Metro Bundler:**
 
@@ -73,11 +69,12 @@ This project uses Expo Router with a file-based routing system. Routes are defin
 
 **Core Dependencies:**
 
--  React Native 0.74.5 with React 18.2.0
--  Expo SDK ~51.0.39
--  Navigation: Expo Router ~3.5.24 with drawer navigation
--  Animations: `moti`, `react-native-reanimated` ~3.10.1
+-  React Native 0.81.4 with React 19.1.0
+-  Expo SDK ~54.0.0
+-  Navigation: Expo Router ~6.0.12 with drawer navigation (@react-navigation/drawer ^7.5.0)
+-  Animations: `moti`, `react-native-reanimated` ~4.1.1, `react-native-worklets` 0.5.1
 -  UI Components: `@gorhom/bottom-sheet`, `react-native-toast-message`, `react-native-awesome-gallery`
+-  Build Properties: Android SDK 35, iOS deployment target 15.1
 
 ### Path Aliases
 
@@ -136,6 +133,8 @@ Each section has its own nested routing via `_layout.jsx` files.
 
 ### Build Configuration
 
--  Babel preset: `babel-preset-expo` with NativeWind plugin
+-  Babel preset: `babel-preset-expo` with NativeWind and Reanimated plugins
+-  Reanimated plugin must be last in the plugins array
 -  Console statements can be stripped in production via `babel-plugin-transform-remove-console`
 -  TypeScript extends `expo/tsconfig.base`
+-  Build properties configured via `expo-build-properties` plugin in `app.json`

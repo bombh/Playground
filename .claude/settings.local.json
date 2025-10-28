@@ -1,3 +1,14 @@
 {
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.expo.dev)",
+      "mcp__context7__get-library-docs",
+      "Bash(npx expo-doctor)",
+      "Read(//private/tmp/**)",
+      "Bash(watchman watch-del '/Users/fab/Documents/_DEV/react/Playground')",
+      "Bash(watchman watch-project '/Users/fab/Documents/_DEV/react/Playground')",
+      "Bash(cat /tmp/expo-final.log)"
+    ]
+  },
   "outputStyle": "default"
 }

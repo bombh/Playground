@@ -57,7 +57,7 @@ const DrawerLayout = () => {
             drawerActiveBackgroundColor: colors.stone[800],
             drawerInactiveTintColor: colors.stone[500],
          }}
-         initialRouteName="works"
+         initialRouteName="index"
       >
          <Drawer.Screen
             name="index"
