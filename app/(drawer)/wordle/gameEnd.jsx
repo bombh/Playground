@@ -6,7 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context"
 import Icon from "@/assets/images/wordle/icon.svg"
 import ScreenStackFull from "@/src/layouts/ScreenStackFull"
 import { XCircleIcon } from "react-native-heroicons/outline"
-import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo"
+import { Show, useUser } from "@clerk/expo"
 import { doc, getDoc, setDoc } from "firebase/firestore"
 import { FIREBASE_DB } from "@/src/utils/firebaseConfig"
 import { COLORS } from "@/src/constants/wordle"
@@ -97,7 +97,7 @@ const gameEnd = () => {
                </Text>
                <Text className="text-5xl font-rock text-center px-20 pt-12">{word}</Text>
                <View className="w-full mt-8 px-16">
-                  <SignedIn>
+                  <Show when="signed-in">
                      <Text className="text-sm text-center">Your Statistics</Text>
                      <View className="flex-row justify-evenly mt-4">
                         <View className=" items-center">
@@ -113,9 +113,9 @@ const gameEnd = () => {
                            <Text className="text-stone-400">Streaks</Text>
                         </View>
                      </View>
-                  </SignedIn>
+                  </Show>
 
-                  <SignedOut>
+                  <Show when="signed-out">
                      <Text className="text-sm text-center">Want to see your stats and streaks?</Text>
                      <Pressable
                         className="bg-stone-800 p-3 mt-4 rounded-full active:opacity-50"
@@ -130,7 +130,7 @@ const gameEnd = () => {
                      >
                         <Text className="text-base text-stone-800 text-center">Already registered ? Log in</Text>
                      </Pressable>
-                  </SignedOut>
+                  </Show>
                </View>
             </View>
             <View className="absolute bottom-10 w-full px-16">

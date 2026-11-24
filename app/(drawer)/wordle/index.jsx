@@ -7,7 +7,7 @@
 import { View, Text, Pressable } from "react-native"
 import React from "react"
 import { Link } from "expo-router"
-import { SignedIn, SignedOut, useAuth } from "@clerk/clerk-expo"
+import { Show, useAuth } from "@clerk/expo"
 import { Squares2X2Icon } from "react-native-heroicons/outline"
 
 import ScreenDrawer from "@/src/layouts/ScreenDrawer"
@@ -46,7 +46,7 @@ const Wordle = () => {
                   </Pressable>
                </Link>
 
-               <SignedOut>
+               <Show when="signed-out">
                   <Link
                      href="/wordle/login"
                      asChild
@@ -55,16 +55,16 @@ const Wordle = () => {
                         <Text className="text-base text-stone-800 text-center">Log In</Text>
                      </Pressable>
                   </Link>
-               </SignedOut>
+               </Show>
 
-               <SignedIn>
+               <Show when="signed-in">
                   <Pressable
                      onPress={() => signOut()}
                      className="border border-stone-800 p-3 mt-4 rounded-full active:opacity-50"
                   >
                      <Text className="text-base text-stone-800 text-center">Log Out</Text>
                   </Pressable>
-               </SignedIn>
+               </Show>
 
                {/* Temporarily disabled - SubscribeModal has compatibility issues
                <Pressable

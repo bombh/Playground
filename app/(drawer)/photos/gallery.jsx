@@ -1,60 +1,56 @@
 import { useLocalSearchParams, useNavigation, Link } from "expo-router"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-import AwesomeGallery from "react-native-awesome-gallery"
+import { useCallback, useEffect } from "react"
+import { View } from "react-native"
 import { Image } from "expo-image"
-import Animated, { FadeInDown, FadeInUp, FadeOutDown, FadeOutUp } from "react-native-reanimated"
+import { GestureViewer, useGestureViewerState } from "react-native-gesture-image-viewer"
 
 // Get local data
 const jsonData = require("@/data/movies.json")
 const images = jsonData.movies.map((item) => item.poster)
 
-const renderItem = ({ item, setImageDimensions }) => {
-   return (
-      <Image
-         source={item}
-         style={StyleSheet.absoluteFillObject}
-         contentFit="contain"
-         onLoad={(e) => {
-            const { width, height } = e.source
-            setImageDimensions({ width, height })
-         }}
-      />
-   )
-}
+// Full size style (expo-image has no NativeWind cssInterop in this project, so no className)
+const imageStyle = { width: "100%", height: "100%" }
+
+// Space between two images while swiping
+const PAGE_SPACING = 30
 
 const DetailGallery = () => {
-   const gallery = useRef(null)
-   const { setParams, goBack, isFocused } = useNavigation()
+   const { setParams, goBack } = useNavigation()
+   // Route params travel as strings: `index` = picture to open first
+   const { index } = useLocalSearchParams()
+   // Current picture, kept in the route params as before
+   const { currentIndex, totalCount } = useGestureViewerState()
 
-   const onIndexChange = useCallback(
-      (index) => {
-         console.log("index", index)
-         isFocused && setParams({ index })
-      },
-      [isFocused, setParams]
+   // totalCount is 0 until the viewer is registered (currentIndex would be 0, not the route's index) and after unmount
+   useEffect(() => {
+      if (totalCount > 0) setParams({ index: String(currentIndex) })
+   }, [currentIndex, totalCount, setParams])
+
+   // Renders one poster; its natural size is given to the viewer, which uses it for the zoom bounds
+   const renderItem = useCallback(
+      (item, _index, { setItemDimensions }) => (
+         <Image
+            source={item}
+            style={imageStyle}
+            contentFit="contain"
+            onLoad={(e) => {
+               const { width, height } = e.source
+               setItemDimensions({ width, height })
+            }}
+         />
+      ),
+      []
    )
 
    return (
       <View className="bg-black flex-1">
-         <AwesomeGallery
-            ref={gallery}
+         <GestureViewer
             data={images}
-            keyExtractor={(item) => item}
+            initialIndex={Number(index) || 0}
             renderItem={renderItem}
-            initialIndex={0}
-            numToRender={3}
-            doubleTapInterval={150}
-            onIndexChange={onIndexChange}
-            onSwipeToClose={goBack}
-            onScaleEnd={(scale) => {
-               if (scale < 0.7) {
-                  goBack()
-               }
-            }}
-            disableTransitionOnScaledImage
-            hideAdjacentImagesOnScaledImage
-            loop
+            onDismiss={goBack}
+            pageSpacing={PAGE_SPACING}
+            enableLoop
          />
          <Link href="/photos">Back Photos</Link>
       </View>

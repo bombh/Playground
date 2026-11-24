@@ -5,8 +5,8 @@ import { GestureHandlerRootView } from "react-native-gesture-handler"
 import { useFonts } from "expo-font"
 import { useEffect } from "react"
 import Toast, { BaseToast } from "react-native-toast-message"
-import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo"
-import { tokenCache } from "@/src/utils/cache"
+import { ClerkProvider, ClerkLoaded } from "@clerk/expo"
+import { tokenCache } from "@clerk/expo/token-cache"
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet"
 
 SplashScreen.preventAutoHideAsync()

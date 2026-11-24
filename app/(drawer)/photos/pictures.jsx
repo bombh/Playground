@@ -2,7 +2,7 @@
 // import { useLocalSearchParams, useNavigation } from "expo-router"
 // import { useCallback, useEffect, useRef, useState } from "react"
 // import { StatusBar, StyleSheet, Text, TouchableOpacity, View } from "react-native"
-// import AwesomeGallery from "react-native-awesome-gallery"
+// import { GestureViewer } from "react-native-gesture-image-viewer" // (replaces react-native-awesome-gallery)
 // import * as React from "react"
 // import { Image } from "expo-image"
 // import Animated, { FadeInDown, FadeInUp, FadeOutDown, FadeOutUp } from "react-native-reanimated"
@@ -12,7 +12,7 @@
 //    return (
 //       <Image
 //          source={item.uri}
-//          style={StyleSheet.absoluteFillObject}
+//          style={StyleSheet.absoluteFill}
 //          contentFit="contain"
 //          onLoad={(e) => {
 //             const { width, height } = e.source

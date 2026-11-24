@@ -28,7 +28,7 @@ const AnimatedList = () => {
          <ScreenStackFull title="UI Masked List" />
 
          {/*** Background blurred images ***/}
-         <View style={StyleSheet.absoluteFillObject}>
+         <View style={StyleSheet.absoluteFill}>
             {data.map((movie, index) => {
                // Set range for opacity
                const inputRange = [(index - 2) * ITEM_SIZE, (index - 1) * ITEM_SIZE, index * ITEM_SIZE]
@@ -40,7 +40,7 @@ const AnimatedList = () => {
                return (
                   <Animated.View
                      key={`bg-${movie.imdbID}`}
-                     style={[StyleSheet.absoluteFillObject, { opacity }]}
+                     style={[StyleSheet.absoluteFill, { opacity }]}
                   >
                      <BackgroundCard
                         width={width}

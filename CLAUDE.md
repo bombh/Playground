@@ -24,7 +24,8 @@ This project uses Expo Router with a file-based routing system. Routes are defin
 
 -  `app/_layout.jsx` - Root layout that re-exports from `src/layouts/Root.jsx`
 -  `app/(drawer)/_layout.jsx` - Drawer navigation layout that re-exports from `src/layouts/Drawer.jsx`
--  `app/(drawer)/[feature]/` - Feature-specific routes (UI, wordle, smoking, photos, template)
+-  `app/(drawer)/[feature]/` - Feature-specific routes (UI, wordle, smoking, photos, template), each in its own native Stack
+-  `app/(drawer)/(home)/` - Home (URL `/`), also wrapped in a Stack so its header (iOS 26 glass menu button from `ScreenDrawer`) matches the other sections. Drawer screen name is `(home)`
 
 ### Project Structure
 
@@ -38,7 +39,6 @@ This project uses Expo Router with a file-based routing system. Routes are defin
    -  `wordle/` - Wordle game UI components (ScreenKeyboard, Letter, SubscribeModal)
 -  **`src/utils/`** - Utility functions and configurations:
    -  `firebaseConfig.js` - Firebase initialization
-   -  `cache.ts` - Token caching for Clerk authentication
    -  `array.js` - Array helper functions
 -  **`src/constants/`** - Constants including `wordle.js`
 -  **`data/`** - Static data files:
@@ -57,24 +57,27 @@ This project uses Expo Router with a file-based routing system. Routes are defin
 
 **Metro Bundler:**
 
--  Custom transformer for SVG support via `react-native-svg-transformer`
+-  Custom transformer for SVG support via `react-native-svg-transformer`, combined with `withNativeWind` in `metro.config.js` (keep both — dropping the transformer makes `.svg` imports assets and crashes `wordle/gameEnd.jsx`)
 -  SVG files treated as source files (not assets)
--  CJS module support enabled
 
 **Authentication & Data:**
 
--  Clerk for authentication (requires `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` in `.env`)
+-  Clerk for authentication via `@clerk/expo` v4 (Core 3; requires `EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY` in `.env`). Use `<Show when="signed-in|signed-out">` (no `SignedIn`/`SignedOut`) and `useSSO()` (not `useOAuth`)
 -  Firebase/Firestore for data persistence (config in `src/utils/firebaseConfig.js`)
--  Secure token storage using `expo-secure-store` and custom cache utility
+-  Token storage: official `tokenCache` from `@clerk/expo/token-cache` (expo-secure-store)
 
 **Core Dependencies:**
 
--  React Native 0.81.4 with React 19.1.0
--  Expo SDK ~54.0.0
--  Navigation: Expo Router ~6.0.12 with drawer navigation (@react-navigation/drawer ^7.5.0)
--  Animations: `moti`, `react-native-reanimated` ~4.1.1, `react-native-worklets` 0.5.1
--  UI Components: `@gorhom/bottom-sheet`, `react-native-toast-message`, `react-native-awesome-gallery`
--  Build Properties: Android SDK 35, iOS deployment target 15.1
+-  Expo SDK ~58 — React Native 0.88.1, React 19.3.0, TypeScript ~6.0. iOS builds need **Xcode 26.4+**
+-  Navigation: Expo Router ~58 with drawer from `expo-router/drawer` (`Drawer`, `DrawerContentScrollView`, `DrawerItemList`). Never import `@react-navigation/*` directly (SDK 56+)
+-  Animations: `moti` 0.30, `react-native-reanimated` 4.7.1, `react-native-worklets` 0.13 (the worklets Babel plugin is added automatically by `babel-preset-expo`; don't add it to `babel.config.js`)
+-  Gestures: `react-native-gesture-handler` 3.3
+-  Styling: NativeWind 4.2.x + Tailwind 3 (NativeWind v5 / Tailwind 4 deliberately not used yet)
+-  UI Components: `@gorhom/bottom-sheet`, `react-native-toast-message`, `react-native-gesture-image-viewer` (galleries)
+-  RN 0.88 gotchas: `StyleSheet.absoluteFillObject` no longer exists (it is `undefined` → layouts silently break) — use `StyleSheet.absoluteFill`. iOS 26 native headers are translucent: set `headerTransparent: false` + `headerStyle.backgroundColor` when content must start below the header
+-  Dev warnings filter: `index.js` (the `main` entry) loads `src/utils/ignoredWarnings.js` first, then `expo-router/entry`. It hides only known third-party warnings by exact prefix; remove entries once the library is fixed
+-  iOS dev builds (`npm run ios`) need Xcode 26.4+; until then, run in Expo Go with `npx expo start --go`
+-  Build Properties: SDK defaults (no SDK/deployment-target overrides in `app.json`); splash configured via the `expo-splash-screen` plugin
 
 ### Path Aliases
 

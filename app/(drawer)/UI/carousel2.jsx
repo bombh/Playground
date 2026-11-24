@@ -48,7 +48,7 @@ const AnimatedList = () => {
 
          {/*** Background blurred images ***/}
          <View
-            style={StyleSheet.absoluteFillObject}
+            style={StyleSheet.absoluteFill}
             className="bg-black"
          >
             {data.movies.map((movie, index) => {
@@ -62,7 +62,7 @@ const AnimatedList = () => {
                return (
                   <Animated.View
                      key={`bg-${movie.imdbID}`}
-                     style={[StyleSheet.absoluteFillObject, { opacity }]}
+                     style={[StyleSheet.absoluteFill, { opacity }]}
                   >
                      <BackgroundCard {...movie} />
                   </Animated.View>

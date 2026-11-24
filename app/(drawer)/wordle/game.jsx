@@ -213,13 +213,16 @@ const Game = () => {
          <Stack.Screen
             options={{
                headerShown: true,
-               headerBackTitleVisible: false,
+               headerBackButtonDisplayMode: "minimal",
                headerTitle: "Wordle",
                headerTitleStyle: {
                   fontFamily: "RockSalt-Regular",
                   fontSize: 17,
                },
                headerShadowVisible: false,
+               // Opaque header so the grid starts below it (iOS 26 headers are translucent by default)
+               headerTransparent: false,
+               headerStyle: { backgroundColor: "#f2f2f2" },
                headerTintColor: "#000",
                // headerRight: () => (
                //    <View className="flex-row gap-3">

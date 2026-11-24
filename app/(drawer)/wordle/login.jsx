@@ -1,8 +1,9 @@
-import { View, Text, Pressable, ScrollView } from "react-native"
-import React from "react"
+import { View, Text, Pressable, ScrollView, Platform } from "react-native"
+import React, { useEffect, useRef, useState } from "react"
+import * as WebBrowser from "expo-web-browser"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { useRouter } from "expo-router"
-import { useOAuth } from "@clerk/clerk-expo"
+import { useSSO } from "@clerk/expo"
 
 import ScreenStackFull from "@/src/layouts/ScreenStackFull"
 
@@ -13,30 +14,52 @@ const Strategy = {
    Facebook: "oauth_facebook",
 }
 
+// Complete any pending auth session when the app is re-opened from the OAuth redirect
+WebBrowser.maybeCompleteAuthSession()
+
+// Warm up the Android browser to improve the OAuth flow start time
+const useWarmUpBrowser = () => {
+   useEffect(() => {
+      if (Platform.OS !== "android") return
+      void WebBrowser.warmUpAsync()
+      return () => {
+         void WebBrowser.coolDownAsync()
+      }
+   }, [])
+}
+
 const Login = () => {
    const router = useRouter()
+   useWarmUpBrowser()
 
-   const { startOAuthFlow: googleAuth } = useOAuth({ strategy: Strategy.Google })
-   const { startOAuthFlow: appleAuth } = useOAuth({ strategy: Strategy.Apple })
-   const { startOAuthFlow: facebookAuth } = useOAuth({ strategy: Strategy.Facebook })
+   const { startSSOFlow } = useSSO()
+
+   // Strategy being signed in with (null when idle); the ref blocks double taps before the re-render
+   const [pendingStrategy, setPendingStrategy] = useState(null)
+   const isAuthenticating = useRef(false)
 
    const onSelectAuth = async (strategy) => {
-      const selectedAuth = {
-         [Strategy.Google]: googleAuth,
-         [Strategy.Apple]: appleAuth,
-         [Strategy.Facebook]: facebookAuth,
-      }[strategy]
+      if (isAuthenticating.current) return
+      isAuthenticating.current = true
+      setPendingStrategy(strategy)
 
       try {
-         const { createdSessionId, setActive } = await selectedAuth()
+         // iOS refuses to open a new auth session while a previous one is still marked open
+         // ("Another web browser is already open"), e.g. after an interrupted attempt
+         if (Platform.OS === "ios") WebBrowser.dismissAuthSession()
+
+         const { createdSessionId, setActive } = await startSSOFlow({ strategy })
          console.log("Clerk: selectAuth()")
          if (createdSessionId) {
             console.log("Clerk: setActive()", createdSessionId)
-            setActive({ session: createdSessionId })
+            await setActive?.({ session: createdSessionId })
             router.back()
          }
       } catch (error) {
          console.error("Login error", error)
+      } finally {
+         isAuthenticating.current = false
+         setPendingStrategy(null)
       }
    }
 
@@ -57,7 +80,8 @@ const Login = () => {
                <View className="mt-8 px-16">
                   <Pressable
                      onPress={() => onSelectAuth(Strategy.Google)}
-                     className="bg-stone-800 p-3 mt-8 rounded-full active:opacity-50"
+                     disabled={pendingStrategy !== null}
+                     className={`bg-stone-800 p-3 mt-8 rounded-full active:opacity-50 ${pendingStrategy ? "opacity-50" : ""}`}
                   >
                      <Text className="text-base text-white text-center">
                         Continue with <Text className="font-bold">Google</Text>
@@ -66,7 +90,8 @@ const Login = () => {
 
                   <Pressable
                      onPress={() => onSelectAuth(Strategy.Apple)}
-                     className="bg-stone-800 p-3 mt-8 rounded-full active:opacity-50"
+                     disabled={pendingStrategy !== null}
+                     className={`bg-stone-800 p-3 mt-8 rounded-full active:opacity-50 ${pendingStrategy ? "opacity-50" : ""}`}
                   >
                      <Text className="text-base text-white text-center">
                         Continue with <Text className="font-bold">Apple</Text>
@@ -75,7 +100,8 @@ const Login = () => {
 
                   <Pressable
                      onPress={() => onSelectAuth(Strategy.Facebook)}
-                     className="bg-stone-800 p-3 mt-8 rounded-full active:opacity-50"
+                     disabled={pendingStrategy !== null}
+                     className={`bg-stone-800 p-3 mt-8 rounded-full active:opacity-50 ${pendingStrategy ? "opacity-50" : ""}`}
                   >
                      <Text className="text-base text-white text-center">
                         Continue with <Text className="font-bold">Facebook</Text>

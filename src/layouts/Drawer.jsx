@@ -1,5 +1,4 @@
-import { Drawer } from "expo-router/drawer"
-import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer"
+import { Drawer, DrawerContentScrollView, DrawerItemList } from "expo-router/drawer"
 import { Text, View } from "react-native"
 import {
    DocumentDuplicateIcon,
@@ -50,17 +49,15 @@ const DrawerLayout = () => {
                width: 220,
                backgroundColor: colors.stone[900],
             },
-            drawerLabelStyle: {
-               marginLeft: -30,
-            },
             drawerActiveTintColor: colors.stone[100],
             drawerActiveBackgroundColor: colors.stone[800],
             drawerInactiveTintColor: colors.stone[500],
          }}
-         initialRouteName="index"
+         initialRouteName="(home)"
       >
+         {/* Home lives in its own native Stack (app/(drawer)/(home)) so its header matches the other sections */}
          <Drawer.Screen
-            name="index"
+            name="(home)"
             options={{
                drawerLabel: "Home",
                title: "",

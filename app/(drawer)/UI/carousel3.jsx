@@ -4,7 +4,8 @@
  * @tutorial https://www.youtube.com/watch?v=fSuYM86JXFo
  */
 
-import { View, Text, FlatList, Dimensions, Image, Animated, SafeAreaView, Platform } from "react-native"
+import { View, Text, FlatList, Dimensions, Image, Animated, Platform } from "react-native"
+import { SafeAreaView } from "react-native-safe-area-context"
 import React, { useRef } from "react"
 
 import ScreenStackFull from "@/src/layouts/ScreenStackFull"
@@ -19,7 +20,7 @@ const AnimatedList = () => {
    return (
       <>
          <ScreenStackFull />
-         <SafeAreaView>
+         <SafeAreaView edges={Platform.OS === "ios" ? ["top", "bottom", "left", "right"] : []}>
             <Text
                style={{ marginTop: Platform.OS === "ios" ? 35 : 70 }}
                className="text-3xl text-stone-700 font-rock mb-4 pt-5 text-center"

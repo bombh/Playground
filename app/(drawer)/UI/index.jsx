@@ -34,7 +34,7 @@ const AnimatedList = () => {
 
             <ListItem
                title="Image Gallery"
-               description="react-native-awesome-gallery
+               description="react-native-gesture-image-viewer
 "
                link="gallery"
             />
